@@ -18,7 +18,7 @@ jobs:
     - name: Publish .NET Core Project
       run: dotnet publish src/SB12Calculator/SB12Calculator.csproj -c Release -o release --nologo
         
-    - name: Change base-tag in index.html from / to BlazorGitHubPagesDemo
+    - name: Change base-tag in index.html from / to SB12Calculator
       run: sed -i 's/<base href="\/" \/>/<base href="\/SB12Calculator\/" \/>/g' release/wwwroot/index.html
         
     - name: copy index.html to 404.html
@@ -29,8 +29,6 @@ jobs:
       run: touch release/wwwroot/.nojekyll
       
     - name: Commit wwwroot to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: release/wwwroot
+      uses: JamesIves/github-pages-deploy-action@4
+      with:        
+        folder: release/wwwroot
