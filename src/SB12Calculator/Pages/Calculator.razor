@@ -1,6 +1,7 @@
 ﻿@page "/calculator"
 @page "/"
 @using SB12Calculator.Core
+@using System.Security.Cryptography.X509Certificates
 @inject HttpClient Http
 
 <PageTitle>SB 12 Calculator</PageTitle>
@@ -14,155 +15,106 @@
 else
 {
     <EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
+        <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
 
-        <p>
-            <div class="row">
-                <div class="col-auto">
-                    <label>
-                        District
-                        <InputSelect class="form-select" @bind-Value="_model.DistrictId">
-                            @if (_model.DistrictId is null)
-                            {
-                                <option selected value="">None</option>
-                            }
-                            @foreach (var district in _districts.OrderBy(d => d.DistrictName))
-                            {
-                                <option value="@district.DistrictId">@district.DistrictName (@district.DistrictId)</option>
-                            }
-                            @if (_model.DistrictId is not null)
-                            {
-                                <option value="">None</option>
-                            }
-                        </InputSelect>
-                    </label>
+        <div class="form-floating mb-4">
+            <InputSelect id="DistrictId" class="form-select form-control" @bind-Value="_model.DistrictId">
+                @if (_model.DistrictId is null)
+                {
+                    <option selected value="">None</option>
+                }
+                @foreach (var district in _districts.OrderBy(d => d.DistrictName))
+                {
+                    <option value="@district.DistrictId">@district.DistrictName (@district.DistrictId)</option>
+                }
+                @if (_model.DistrictId is not null)
+                {
+                    <option value="">None</option>
+                }
+            </InputSelect>
+            <label for="DistrictId" class="form-label">District</label>
+        </div>
+
+        <div class="form-floating mb-4">
+            <InputNumber id="QualifyYear" @bind-Value="_model.ExemptionQualifyYear" class="form-control" />
+            <label for="QualifyYear" class="form-label">Over 65 / Disabled qualify year</label>
+        </div>
+
+        @for (var i = 0; i < _model.Details.Count; i++)
+        {
+            var detail = _model.Details[i];
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    @if (i < _model.Details.Count - 1)
+                    {
+                        <div class="form-floating">
+                            <InputNumber id="@($"TaxableValue_{detail.Year}")" @bind-Value="detail.TaxableValue" class="form-control"></InputNumber>
+                            <label for="@($"TaxableValue_{detail.Year}")" class="form-label">@detail.Year Taxable Value</label>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <InputNumber id="@($"NewImprovement_{detail.Year}")" @bind-Value="detail.CeilingAdditionalImprovement" class="form-control"></InputNumber>
+                        <label for="@($"NewImprovement_{detail.Year}")" class="form-label">@(i == 0 ? $"{detail.Year} Ceiling" : $"{detail.Year} New Improvement taxes")</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating">
+                        <InputNumber id="@($"MCR_{detail.Year}")" @bind-Value="detail.MCR" class="form-control" disabled="@detail.MCRPopulated"></InputNumber>
+                        <label for="@($"MCR_{detail.Year}")" class="form-label">@detail.Year MCR</label>
+                    </div>
                 </div>
             </div>
-        </p>
-
-        <p>
-            <div class="row">
-                <label>
-                    2023 MCR (defaults to 2022 until available)
-                    <InputNumber @bind-Value="_model.MCR2023" />
-                </label>
-            </div>
-        </p>
-
-        <p>
-            <div class="row">
-                <label>
-                    Over 65 / Disability exemption qualify year:
-                    <InputNumber @bind-Value="_model.ExemptionQualifyYear" />
-                </label>
-            </div>
-        </p>
-
-        <p>
-            <div class="row">
-                <div class="col-auto">
-                    <label>
-                        2018 Taxable Value
-                        <InputNumber @bind-Value="_model.TaxableValue2018" />
-                    </label>
-                </div>
-                <div class="col-auto">
-                    <label>
-                        Taxes imposed in 2018:
-                        <InputNumber @bind-Value="_model.TaxesImposedIn2018" />
-                    </label>
-                </div>
-            </div>
-        </p>
-
-        <p>
-            <div class="row">
-                <div class="col-auto">
-                    <label>
-                        2019 Taxable Value
-                        <InputNumber @bind-Value="_model.TaxableValue2019" />
-                    </label>
-                </div>
-                <div class="col-auto">
-                    <label>
-                        2019 New Improvement
-                        <InputNumber @bind-Value="_model.NewImprovement2019" />
-                    </label>
-                </div>
-            </div>
-        </p>
-
-        <p>
-            <div class="row">
-                <div class="col-auto">
-                    <label>
-                        2020 Taxable Value
-                        <InputNumber @bind-Value="_model.TaxableValue2020" />
-                    </label>
-                </div>
-                <div class="col-auto">
-                    <label>
-                        2020 New Improvement
-                        <InputNumber @bind-Value="_model.NewImprovement2020" />
-                    </label>
-                </div>
-            </div>
-        </p>
-
-        <p>
-            <div class="row">
-                <div class="col-auto">
-                    <label>
-                        2021 Taxable Value
-                        <InputNumber @bind-Value="_model.TaxableValue2021" />
-                    </label>
-                </div>
-                <div class="col-auto">
-                    <label>
-                        2021 New Improvement
-                        <InputNumber @bind-Value="_model.NewImprovement2021" />
-                    </label>
-                </div>
-            </div>
-        </p>
-
-        <p>
-            <div class="row">
-                <div class="col-auto">
-                    <label>
-                        2022 Taxable Value
-                        <InputNumber @bind-Value="_model.TaxableValue2022" />
-                    </label>
-                </div>
-                <div class="col-auto">
-                    <label>
-                        2022 New Improvement
-                        <InputNumber @bind-Value="_model.NewImprovement2022" />
-                    </label>
-                </div>
-            </div>
-        </p>
-
-        <p>
-            <label>
-                2023 New Improvement
-                <InputNumber @bind-Value="_model.NewImprovement2023" />
-            </label>
-        </p>
+        }
 
         <button type="submit">Submit</button>
     </EditForm>
 
     @if (_calculationResult != null)
     {
-        <p>
-            New Ceiling: @_calculationResult.CalculatedCeiling.ToString("C2")
-        </p>
-        @foreach (var line in _calculationResult.Output)
-        {
-            <p>@line</p>
-        }
+        <table class="table caption-top">
+            <caption>Result</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Year</th>
+                    <th scope="col">Starting</th>
+                    <th scope="col">New Improvement</th>
+                    <th scope="col">Taxable Value</th>
+                    <th scope="col">Reduction</th>
+                    <th scope="col">Running Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < _calculationResult.Details.Count; i++)
+                {
+                    var detail = _calculationResult.Details[i];
+                    if (i < _calculationResult.Details.Count - 1)
+                    {
+                        <tr>
+                            <th scope="row">@detail.Year</th>
+                            <td>@detail.StartingAmount.ToString("C2")</td>
+                            <td>@(i == 0 ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
+                            <td>@(detail.TaxableValue.ToString("N0"))</td>
+                            <td><Tooltip Text="@detail.CalculationText">@detail.Reduction.ToString("C2")</Tooltip></td>
+                            <td>@detail.RunningTotal.ToString("C2")</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <th scope="row">@detail.Year</th>
+                            <td>@detail.StartingAmount.ToString("C2")</td>
+                            <td>@detail.AdditionalImprovement.ToString("C2")</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td><b>@detail.RunningTotal.ToString("C2")</b></td>
+                        </tr> 
+                    }
+                }
+            </tbody>
+        </table>
     }
 }
 
@@ -171,85 +123,93 @@ else
     private EditContext? _editContext;
     private readonly CalculatorModel _model = new();
     private CalculationResult _calculationResult;
+    private const int CalculationYear = 2023;
 
     protected override async Task OnInitializedAsync()
     {
         _districts = await Http.GetFromJsonAsync<DistrictDetail[]>("data/rates.json");
         _editContext = new(_model);
         _editContext.OnFieldChanged += EditFieldChanged;
+        _model.ExemptionQualifyYear = 2018;
+        UpdateModelYears();
     }
 
     private void EditFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        if (e.FieldIdentifier.FieldName == nameof(CalculatorModel.DistrictId))
+        if (e.FieldIdentifier.FieldName is nameof(CalculatorModel.ExemptionQualifyYear) or nameof(CalculatorModel.DistrictId))
         {
-            if (string.IsNullOrEmpty(_model.DistrictId))
-                return;
-            var dist = _districts.FirstOrDefault(d => d.DistrictId == _model.DistrictId);
-            var rate = dist.Rates.FirstOrDefault(r => r.Year == 2022);
-            if (rate == null)
-                return;
-            _model.MCR2023 = rate.MaximumCompressedRate;
+            UpdateModelYears();
+        }
+    }
+
+    private void UpdateModelYears()
+    {
+        if (string.IsNullOrEmpty(_model.DistrictId))
+            return;
+
+        var dist = _districts.FirstOrDefault(d => d.DistrictId == _model.DistrictId);
+
+        if (dist == null)
+            return;
+
+        var startYear = Math.Max(_model.ExemptionQualifyYear, 2018);
+
+        if (_model.Details.Count > 0)
+        {
+            for (var x = _model.Details.Count - 1; x >= 0; x--)
+            {
+                var detail = _model.Details[x];
+
+                if (detail.Year < startYear)
+                    _model.Details.RemoveAt(x);
+            }
+        }
+
+        for (var i = startYear; i <= CalculationYear; i++)
+        {
+            var rate = dist.Rates.FirstOrDefault(r => r.Year == i);
+            var detail = _model.Details.FirstOrDefault(d => d.Year == i);
+
+            if (detail == null)
+            {
+                detail = new CalculatorYearDetailModel
+                    {
+                        Year = i,
+                        TaxableValue = 100000
+                    };
+                _model.Details.Insert(i - startYear, detail);
+            }
+
+            if (rate != null)
+            {
+                detail.MCRPopulated = true;
+                detail.MCR = rate.MaximumCompressedRate;
+            }
+            else
+            {
+                detail.MCRPopulated = false;
+                detail.MCR = null;
+            }
         }
     }
 
     private void HandleValidSubmit()
     {
-        var dist = _districts.FirstOrDefault(d => d.DistrictId == _model.DistrictId);
-
         var calculationParameters = new CalculationParameters
             {
                 ExemptionQualifyYear = _model.ExemptionQualifyYear,
-                CalculationYear = 2023
+                CalculationYear = CalculationYear
             };
 
-        var rate2018 = dist.Rates.FirstOrDefault(r => r.Year == 2018);
-        calculationParameters.YearDetails.Add(2018, new CalculationParameterYearDetail
-            {
-                MCR = rate2018.MaximumCompressedRate,
-                TaxableValue = _model.TaxableValue2018,
-                TaxesOrNewImprovement = _model.TaxesImposedIn2018
-            });
-
-        var rate2019 = dist.Rates.FirstOrDefault(r => r.Year == 2019);
-        calculationParameters.YearDetails.Add(2019, new CalculationParameterYearDetail
-            {
-                MCR = rate2019.MaximumCompressedRate,
-                TaxableValue = _model.TaxableValue2019,
-                TaxesOrNewImprovement = _model.NewImprovement2019
-            });
-
-        var rate2020 = dist.Rates.FirstOrDefault(r => r.Year == 2020);
-        calculationParameters.YearDetails.Add(2020, new CalculationParameterYearDetail
-            {
-                MCR = rate2020.MaximumCompressedRate,
-                TaxableValue = _model.TaxableValue2020,
-                TaxesOrNewImprovement = _model.NewImprovement2020
-            });
-
-        var rate2021 = dist.Rates.FirstOrDefault(r => r.Year == 2021);
-        calculationParameters.YearDetails.Add(2021, new CalculationParameterYearDetail
-            {
-                MCR = rate2021.MaximumCompressedRate,
-                TaxableValue = _model.TaxableValue2020,
-                TaxesOrNewImprovement = _model.NewImprovement2021
-            });
-
-        var rate2022 = dist.Rates.FirstOrDefault(r => r.Year == 2022);
-        calculationParameters.YearDetails.Add(2022, new CalculationParameterYearDetail
-            {
-                MCR = rate2022.MaximumCompressedRate,
-                TaxableValue = _model.TaxableValue2022,
-                TaxesOrNewImprovement = _model.NewImprovement2022
-            });
-
-        calculationParameters.YearDetails.Add(2023, new CalculationParameterYearDetail
-            {
-                MCR = _model.MCR2023,
-                TaxableValue = 0,
-                TaxesOrNewImprovement = _model.NewImprovement2023
-            });
-
+        foreach (var detail in _model.Details)
+        {
+            calculationParameters.YearDetails.Add(detail.Year, new CalculationParameterYearDetail
+                {
+                    MCR = detail.MCR ?? 0,
+                    TaxableValue = detail.TaxableValue,
+                    CeilingOrAdditionalImprovement = detail.CeilingAdditionalImprovement
+                });
+        }
         _calculationResult = Core.Calculator.Calculate(calculationParameters);
     }
 }
