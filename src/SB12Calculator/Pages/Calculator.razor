@@ -1,7 +1,6 @@
 ﻿@page "/calculator"
 @page "/"
 @using SB12Calculator.Core
-@using System.Security.Cryptography.X509Certificates
 @inject HttpClient Http
 
 <PageTitle>SB 12 Calculator</PageTitle>
@@ -57,7 +56,7 @@ else
                 <div class="col-md-4">
                     <div class="form-floating">
                         <InputNumber id="@($"NewImprovement_{detail.Year}")" @bind-Value="detail.CeilingAdditionalImprovement" class="form-control"></InputNumber>
-                        <label for="@($"NewImprovement_{detail.Year}")" class="form-label">@(i == 0 ? $"{detail.Year} Ceiling" : $"{detail.Year} New Improvement taxes")</label>
+                        <label for="@($"NewImprovement_{detail.Year}")" class="form-label">@(i == 0 ? $"{detail.Year} taxes imposed" : $"{detail.Year} New Improvement taxes")</label>
                     </div>
                 </div>
                 <div class="col-md-4">
