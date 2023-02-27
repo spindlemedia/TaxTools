@@ -5,11 +5,11 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB12Calculator", "SB12Calculator\SB12Calculator.csproj", "{5D6BEF57-813C-4815-B278-132E65B4F480}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TEAExcelToJSON", "TEAExcelToJSON\TEAExcelToJSON.csproj", "{2D0DD451-DC8B-4653-B1D3-C379C2F46BC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TEAExcelToJSON", "TEAExcelToJSON\TEAExcelToJSON.csproj", "{2D0DD451-DC8B-4653-B1D3-C379C2F46BC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SB12Calculator.Core", "SB12Calculator.Core\SB12Calculator.Core.csproj", "{D7ADB354-CD33-49BB-9514-0EC0B8EEE67D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB12Calculator.Core", "SB12Calculator.Core\SB12Calculator.Core.csproj", "{D7ADB354-CD33-49BB-9514-0EC0B8EEE67D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SB12Calculator.Tests", "SB12Calculator.Tests\SB12Calculator.Tests.csproj", "{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB12Calculator.Tests", "SB12Calculator.Tests\SB12Calculator.Tests.csproj", "{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
