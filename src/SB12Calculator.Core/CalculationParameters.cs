@@ -16,6 +16,7 @@
     {
         public decimal MCR { get; set; }
         public int TaxableValue { get; set; }
-        public decimal CeilingOrAdditionalImprovement { get; set; }
+        public decimal OwnershipPercent { get; set; }
+        public decimal CeilingAdjustment { get; set; }
     }
 }

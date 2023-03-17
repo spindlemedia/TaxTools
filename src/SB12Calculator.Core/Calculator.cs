@@ -35,24 +35,24 @@
             };
             if (!runningTotal.HasValue)
             {
-                result.StartingAmount = curYear.CeilingOrAdditionalImprovement;
+                result.StartingAmount = curYear.CeilingAdjustment;
             }
             else
             {
                 result.StartingAmount = runningTotal.Value;
-                result.AdditionalImprovement = curYear.CeilingOrAdditionalImprovement;
+                result.AdditionalImprovement = curYear.CeilingAdjustment;
             }
 
-            result.TaxableValue = curYear.TaxableValue;
+            result.TaxableValue = (int)Math.Round(curYear.TaxableValue * (curYear.OwnershipPercent / 100), 0);
 
             if (year < parameters.CalculationYear)
             {
                 var nextYear = parameters.YearDetails[year + 1];
                 var amount =
-                    Math.Round(curYear.TaxableValue * (curYear.MCR - nextYear.MCR) / 100, 2);
+                    Math.Round(result.TaxableValue * (curYear.MCR - nextYear.MCR) / 100, 2);
                 result.Reduction = Math.Max(amount, 0);
                 result.CalculationText =
-                    $"{curYear.TaxableValue:N0} x ({year} {mcrText} ({curYear.MCR}) - {year + 1} MCR ({nextYear.MCR})) / 100";
+                    $"{result.TaxableValue:N0} x ({year} {mcrText} ({curYear.MCR}) - {year + 1} MCR ({nextYear.MCR})) / 100";
             }
 
             return result;
