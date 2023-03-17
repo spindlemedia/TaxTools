@@ -1,4 +1,4 @@
-﻿@page "/calculator"
+@page "/calculator"
 @page "/"
 @using SB12Calculator.Core
 @inject HttpClient Http
@@ -13,11 +13,35 @@
 }
 else
 {
+    <div class="card mb-3">
+        <div class="card-header">
+            Instructions
+        </div>
+        <div class="card-body">
+            <h5 class="card-title mb-4">This tool has been provided by Spindlemedia to aid in understanding the SB12 ceiling calculation.</h5>
+            <p class="card-text">
+                Steps:
+                <ul>
+                    <li>Select a school district</li>
+                    <li>Enter the year the taxpayer qualified for their Over 65 or Disability exemption</li>
+                    <li>For each year, enter the following:</li>
+                    <ul>
+                        <li>Homesite taxable value</li>
+                        <li>Ceiling amount for the first year, otherwise enter any adjustments such as new improvements or changes in ceiling amount due to ownership percentage changes</li>
+                        <li>Ownership percent if not 100%</li>
+                        <li>Estimated MCR if not pre-filled</li>
+                    </ul>
+                    <li>Click Submit</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+
     <EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
         <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
 
-        <div class="form-floating mb-4">
+        <div class="form-floating mb-3">
             <InputSelect id="DistrictId" class="form-select form-control" @bind-Value="_model.DistrictId">
                 @if (_model.DistrictId is null)
                 {
@@ -44,22 +68,38 @@ else
         {
             var detail = _model.Details[i];
             <div class="row mb-2">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @if (i < _model.Details.Count - 1)
                     {
                         <div class="form-floating">
                             <InputNumber id="@($"TaxableValue_{detail.Year}")" @bind-Value="detail.TaxableValue" class="form-control"></InputNumber>
-                            <label for="@($"TaxableValue_{detail.Year}")" class="form-label">@detail.Year Taxable Value</label>
+                            <label for="@($"TaxableValue_{detail.Year}")" class="form-label">@detail.Year HS Taxable Value</label>
                         </div>
                     }
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-floating">
-                        <InputNumber id="@($"NewImprovement_{detail.Year}")" @bind-Value="detail.CeilingAdditionalImprovement" class="form-control"></InputNumber>
-                        <label for="@($"NewImprovement_{detail.Year}")" class="form-label">@(i == 0 ? $"{detail.Year} taxes imposed" : $"{detail.Year} New Improvement taxes")</label>
+                        <InputNumber id="@($"CeilingAdjustments_{detail.Year}")" @bind-Value="detail.CeilingAdjustment" class="form-control"></InputNumber>
+                        @if (i == 0)
+                        {
+                            <label for="@($"CeilingAdjustments_{detail.Year}")" class="form-label">@detail.Year Ceiling Amount</label>
+                        }
+                        else
+                        {
+                            <label for="@($"CeilingAdjustments_{detail.Year}")" class="form-label">@detail.Year Ceiling Adjustments</label>
+                        }
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                    @if (i < _model.Details.Count - 1)
+                    {
+                        <div class="form-floating">
+                            <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
+                            <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership Percent</label>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-3">
                     <div class="form-floating">
                         <InputNumber id="@($"MCR_{detail.Year}")" @bind-Value="detail.MCR" class="form-control" disabled="@detail.MCRPopulated"></InputNumber>
                         <label for="@($"MCR_{detail.Year}")" class="form-label">@detail.Year MCR</label>
@@ -79,7 +119,7 @@ else
                 <tr>
                     <th scope="col">Year</th>
                     <th scope="col">Starting</th>
-                    <th scope="col">New Improvement</th>
+                    <th scope="col">Ceiling Adjustments</th>
                     <th scope="col">Taxable Value</th>
                     <th scope="col">Reduction</th>
                     <th scope="col">Running Total</th>
@@ -206,7 +246,8 @@ else
                 {
                     MCR = detail.MCR ?? 0,
                     TaxableValue = detail.TaxableValue,
-                    CeilingOrAdditionalImprovement = detail.CeilingAdditionalImprovement
+                    OwnershipPercent = detail.OwnershipPercent,
+                    CeilingAdjustment = detail.CeilingAdjustment
                 });
         }
         _calculationResult = Core.Calculator.Calculate(calculationParameters);

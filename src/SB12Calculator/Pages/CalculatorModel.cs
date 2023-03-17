@@ -7,13 +7,20 @@ namespace SB12Calculator.Pages
         public int Year { get; set; }
         [Range(0, 100_000_000, ErrorMessage = "Taxable value must be between 0 and 100,000,000")]
         public int TaxableValue { get; set; }
-        [Range(0f, 100_000_000f, ErrorMessage = "Amount must be between 0 and 100,000,000")]
-        public decimal CeilingAdditionalImprovement { get; set; }
+        public decimal CeilingAdjustment { get; set; }
+
+        [Range(1, 100, ErrorMessage = "Percent must be between 1 and 100")]
+        public decimal OwnershipPercent { get; set; }
 
         [Required(ErrorMessage = "MCR is required")]
         public decimal? MCR { get; set; }
 
         public bool MCRPopulated { get; set; }
+
+        public CalculatorYearDetailModel()
+        {
+            OwnershipPercent = 100;
+        }
     }
 
     public class CalculatorModel
