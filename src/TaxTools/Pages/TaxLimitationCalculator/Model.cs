@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SB12Calculator.Pages
+namespace TaxTools.Pages.TaxLimitationCalculator
 {
-    public class CalculatorYearDetailModel
+    public class Model
     {
         public int Year { get; set; }
         [Range(0, 100_000_000, ErrorMessage = "Taxable value must be between 0 and 100,000,000")]
@@ -17,7 +17,7 @@ namespace SB12Calculator.Pages
 
         public bool MCRPopulated { get; set; }
 
-        public CalculatorYearDetailModel()
+        public Model()
         {
             OwnershipPercent = 100;
         }
@@ -32,11 +32,11 @@ namespace SB12Calculator.Pages
         public int ExemptionQualifyYear { get; set; }
 
         [ValidateComplexType]
-        public List<CalculatorYearDetailModel> Details { get; set; }
+        public List<Model> Details { get; set; }
 
         public CalculatorModel()
         {
-            Details = new List<CalculatorYearDetailModel>();
+            Details = new List<Model>();
         }
     }
 }

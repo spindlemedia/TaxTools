@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using SB12Calculator;
+using TaxTools;
 using System.Globalization;
 
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");

@@ -1,4 +1,4 @@
-namespace SB12Calculator.Tests
+namespace TaxTools.Tests
 {
     public class CalculationTests
     {

@@ -1,11 +1,11 @@
-@page "/calculator"
+@page "/TaxLimitationCalculator"
 @page "/"
-@using SB12Calculator.Core
+@using TaxTools.Core
 @inject HttpClient Http
 
-<PageTitle>SB 12 Calculator</PageTitle>
+<PageTitle>Tax Limitation Calculator</PageTitle>
 
-<h1>SB 12 Calculator</h1>
+<h1>Tax Limitation Calculator (SB12)</h1>
 
 @if (_districts == null)
 {
@@ -18,7 +18,7 @@ else
             Instructions
         </div>
         <div class="card-body">
-            <h5 class="card-title mb-4">This tool has been provided by Spindlemedia to aid in understanding the SB12 ceiling calculation.</h5>
+            <h5 class="card-title mb-4">This tool has been provided by Spindlemedia to aid in understanding the tax limitation calculation.</h5>
             <p class="card-text">
                 Steps:
                 <ul>
@@ -211,7 +211,7 @@ else
 
             if (detail == null)
             {
-                detail = new CalculatorYearDetailModel
+                detail = new Model
                     {
                         Year = i,
                         TaxableValue = 100000

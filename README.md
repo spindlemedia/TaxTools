@@ -1,2 +1,3 @@
-# SB12Calculator
-Texas Senate Bill 12 ceiling reduction calculator
+# Tax Tools
+Helpful tools to aid in Texas Property Tax calculations
+- Tax Limitation Calculator AKA SB12 (2021)
