@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB12Calculator", "SB12Calculator\SB12Calculator.csproj", "{5D6BEF57-813C-4815-B278-132E65B4F480}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxTools", "TaxTools\TaxTools.csproj", "{5D6BEF57-813C-4815-B278-132E65B4F480}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TEAExcelToJSON", "TEAExcelToJSON\TEAExcelToJSON.csproj", "{2D0DD451-DC8B-4653-B1D3-C379C2F46BC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB12Calculator.Core", "SB12Calculator.Core\SB12Calculator.Core.csproj", "{D7ADB354-CD33-49BB-9514-0EC0B8EEE67D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxTools.Tests", "TaxTools.Tests\TaxTools.Tests.csproj", "{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB12Calculator.Tests", "SB12Calculator.Tests\SB12Calculator.Tests.csproj", "{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaxTools.Core", "TaxTools.Core\TaxTools.Core.csproj", "{D1C26B4B-C37D-4A98-9BFB-4A9D9B3E799E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{2D0DD451-DC8B-4653-B1D3-C379C2F46BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D0DD451-DC8B-4653-B1D3-C379C2F46BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D0DD451-DC8B-4653-B1D3-C379C2F46BC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7ADB354-CD33-49BB-9514-0EC0B8EEE67D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7ADB354-CD33-49BB-9514-0EC0B8EEE67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7ADB354-CD33-49BB-9514-0EC0B8EEE67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7ADB354-CD33-49BB-9514-0EC0B8EEE67D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9FB809A-8C3C-4122-AFB8-2F027F25C49D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1C26B4B-C37D-4A98-9BFB-4A9D9B3E799E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1C26B4B-C37D-4A98-9BFB-4A9D9B3E799E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1C26B4B-C37D-4A98-9BFB-4A9D9B3E799E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1C26B4B-C37D-4A98-9BFB-4A9D9B3E799E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

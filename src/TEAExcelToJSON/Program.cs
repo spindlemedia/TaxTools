@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using System.Text.Json;
 using ExcelDataReader;
-using SB12Calculator.Core;
+using TaxTools.Core;
+using TEAExcelToJSON;
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
@@ -71,4 +72,7 @@ static List<SpreadsheetDetail> ProcessTable(DataTable table)
     return details;
 }
 
-public record SpreadsheetDetail(int Year, string DistrictId, string DistrictName, decimal MaximumCompressedRate, decimal ActualMORate);
+namespace TEAExcelToJSON
+{
+    public record SpreadsheetDetail(int Year, string DistrictId, string DistrictName, decimal MaximumCompressedRate, decimal ActualMORate);
+}

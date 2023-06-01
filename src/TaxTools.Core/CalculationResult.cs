@@ -1,4 +1,4 @@
-﻿namespace SB12Calculator.Core
+﻿namespace TaxTools.Core
 {
     public class CalculationResult
     {

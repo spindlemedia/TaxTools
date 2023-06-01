@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SB12Calculator.Core\SB12Calculator.Core.csproj" />
+    <ProjectReference Include="..\TaxTools.Core\TaxTools.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
