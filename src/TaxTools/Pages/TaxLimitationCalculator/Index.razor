@@ -5,7 +5,7 @@
 
 <PageTitle>Tax Limitation Calculator</PageTitle>
 
-<h1>Tax Limitation Calculator (SB12)</h1>
+<h2>Tax Limitation Calculator (SB12)</h2>
 
 @if (_districts == null)
 {
@@ -18,7 +18,10 @@ else
             Instructions
         </div>
         <div class="card-body">
-            <h5 class="card-title mb-4">This tool has been provided by Spindlemedia to aid in understanding the tax limitation calculation.</h5>
+            <h5 class="card-title mb-4">
+                <p>This tool has been provided by Spindlemedia to aid in understanding the tax limitation calculation.</p>
+                <p style="font-weight: bold; color: red">Senate Bill 1 is NOT yet law and is subject to change.</p>
+            </h5>
             <p class="card-text">
                 Steps:
                 <ul>
@@ -45,7 +48,7 @@ else
         <div class="form-floating mb-2">
             <div class="form-check form-switch">
                 <InputCheckbox id="EnableSB1Calculation" @bind-Value="_model.EnableSB1Calculation" class="form-check-input" />
-                <label for="EnableSB1Calculation" class="form-check-label">Enable SB1 calculation (In Preview)</label>
+                <label for="EnableSB1Calculation" class="form-check-label">Enable SB1 preliminary calculation</label>
             </div>
         </div>
 
@@ -120,7 +123,7 @@ else
                         {
                             <div class="form-floating">
                                 <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control"></InputNumber>
-                                <label for="@($"TaxRate_{detail.Year}")" class="form-label">@detail.Year Tax Rate</label>
+                                <label for="@($"TaxRate_{detail.Year}")" class="form-label">@detail.Year Total Tax Rate</label>
                             </div>
                         }
                     </div>
@@ -163,7 +166,14 @@ else
                             <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
                             @if (_model.EnableSB1Calculation)
                             {
-                                <td>N/A</td>
+                                if (detail.SB1Reduction.HasValue)
+                                {
+                                    <td><Tooltip Text="@detail.SB1CalculationText">@detail.SB1Reduction.Value.ToString("C2")</Tooltip></td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                }
                             }
                             <td>@detail.RunningTotal.ToString("C2")</td>
                         </tr>
@@ -178,7 +188,14 @@ else
                             <td>N/A</td>
                             @if (_model.EnableSB1Calculation)
                             {
-                                <td><Tooltip Text="@detail.SB1CalculationText">@detail.SB1Reduction.ToString("C2")</Tooltip></td>
+                                if (detail.SB1Reduction.HasValue)
+                                {
+                                    <td><Tooltip Text="@detail.SB1CalculationText">@detail.SB1Reduction.Value.ToString("C2")</Tooltip></td>
+                                }
+                                else
+                                {
+                                    <td>N/A</td>
+                                }
                             }
                             <td><b>@detail.RunningTotal.ToString("C2")</b></td>
                         </tr>
