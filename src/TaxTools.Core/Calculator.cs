@@ -51,7 +51,7 @@ namespace TaxTools.Core
             {
                 var nextYear = parameters.YearDetails[year + 1];
                 var nextYearMCR = nextYear.MCR;
-                if (parameters.EnableSB1Calculation && year + 1 == 2023)
+                if (parameters.EnableSB1Calculation && year + 1 == 2023 && parameters.ExemptionQualifyYear < 2022)
                 {
                     nextYearMCR = Math.Max(nextYearMCR - 0.1m, 0);
                     result.SB1Reduction = Math.Round(15000 * curYear.TaxRate / 100, 2);
