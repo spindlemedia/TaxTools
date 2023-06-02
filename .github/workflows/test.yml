@@ -16,4 +16,4 @@ jobs:
         dotnet-version: '7.0.x'
     
     - name: Run Tests      
-      run: dotnet test        
+      run: dotnet test src
