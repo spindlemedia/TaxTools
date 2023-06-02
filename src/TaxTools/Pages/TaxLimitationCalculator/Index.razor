@@ -42,14 +42,14 @@ else
         <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
 
-        <div class="form-floating mb-4">
+        <div class="form-floating mb-2">
             <div class="form-check form-switch">
                 <InputCheckbox id="EnableSB1Calculation" @bind-Value="_model.EnableSB1Calculation" class="form-check-input" />
                 <label for="EnableSB1Calculation" class="form-check-label">Enable SB1 calculation (In Preview)</label>
             </div>
         </div>
 
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-2">
             <InputSelect id="DistrictId" class="form-select form-control" @bind-Value="_model.DistrictId">
                 @if (_model.DistrictId is null)
                 {
@@ -67,7 +67,7 @@ else
             <label for="DistrictId" class="form-label">District</label>
         </div>
 
-        <div class="form-floating mb-4">
+        <div class="form-floating mb-2">
             <InputNumber id="QualifyYear" @bind-Value="_model.ExemptionQualifyYear" class="form-control" />
             <label for="QualifyYear" class="form-label">Over 65 / Disabled qualify year</label>
         </div>
@@ -75,8 +75,8 @@ else
         @for (var i = 0; i < _model.Details.Count; i++)
         {
             var detail = _model.Details[i];
-            <div class="row mb-2">
-                <div class="col">
+            <div class="row mb-2 gx-1 gy-2">
+                <div class="col-lg">
                     @if (i < _model.Details.Count - 1)
                     {
                         <div class="form-floating">
@@ -85,7 +85,7 @@ else
                         </div>
                     }
                 </div>
-                <div class="col">
+                <div class="col-lg">
                     <div class="form-floating">
                         <InputNumber id="@($"CeilingAdjustments_{detail.Year}")" @bind-Value="detail.CeilingAdjustment" class="form-control"></InputNumber>
                         @if (i == 0)
@@ -98,16 +98,16 @@ else
                         }
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-lg">
                     @if (i < _model.Details.Count - 1)
                     {
                         <div class="form-floating">
                             <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
-                            <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership Percent</label>
+                            <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
                         </div>
                     }
                 </div>
-                <div class="col">
+                <div class="col-lg">
                     <div class="form-floating">
                         <InputNumber id="@($"MCR_{detail.Year}")" @bind-Value="detail.MCR" class="form-control" disabled="@detail.MCRPopulated"></InputNumber>
                         <label for="@($"MCR_{detail.Year}")" class="form-label">@detail.Year MCR</label>
@@ -115,7 +115,7 @@ else
                 </div>
                 @if (_model.EnableSB1Calculation)
                 {
-                    <div class="col">
+                    <div class="col-lg">
                         @if (detail.RequireTaxRate)
                         {
                             <div class="form-floating">
