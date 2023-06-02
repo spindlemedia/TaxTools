@@ -8,9 +8,9 @@
   "resources": {
     "assembly": {
       "Microsoft.AspNetCore.Components.DataAnnotations.Validation.dll": "sha256-VGaB03HIjFg4jeK7BomIFzlhhY3vW5N+jWuRqZkbJsY=",
-      "Microsoft.AspNetCore.Components.dll": "sha256-qgnB5eUYXqHBihDsK0JrEypd1Hh1rfud1jcWUyYdyRo=",
+      "Microsoft.AspNetCore.Components.dll": "sha256-Jg1gFFvxnUFqz2Fcn8VPhoCsd14yUeijLzvHX\/WoLkQ=",
       "Microsoft.AspNetCore.Components.Forms.dll": "sha256-tPCuxCuSaZvaiXPJshg5Y1vbpmPuKH\/YpWvGZhu\/0to=",
-      "Microsoft.AspNetCore.Components.Web.dll": "sha256-P2zJD8BUVWwBW7rWS7vUkQuyxmAQZ7GfQm6pLqQgUfE=",
+      "Microsoft.AspNetCore.Components.Web.dll": "sha256-6uYc86u4Y6CUUcrFLeJVzCcWKLfzq4cQ5DO8JjtgTgE=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-qhgOoX7howIloN+mtCsXWeIArrsOsvnmNNgT2VFOEcg=",
       "Microsoft.Extensions.Configuration.Abstractions.dll": "sha256-X\/f4fDl2cuIRXeWHhK\/f2UqQbFioD+RU4a4CEh0zrrQ=",
       "Microsoft.Extensions.Configuration.dll": "sha256-DBOKSPriP2JDxVbbWrLXyD3K4\/x3RBifNBWk\/q1I39M=",
@@ -40,14 +40,14 @@
       "System.Net.Http.Json.dll": "sha256-Bjqx0812F4ZXQprsEztfnRx2PY+vqztjaVZQbYPc2ls=",
       "System.Net.Primitives.dll": "sha256-voTFtlTk65vDMKp27+l6klBwL2L\/uEnrSfIHCdq+7Lg=",
       "System.ObjectModel.dll": "sha256-ZgvaKcoUKmSjtgGTwLjNBjRfQkTlUOXUWq7ckPdtxb8=",
-      "System.Private.CoreLib.dll": "sha256-Di8b0swf8r2Ynci+hISr1hmOZlAwP6UJtqzidMc4uPQ=",
+      "System.Private.CoreLib.dll": "sha256-9pKNCaGq7OiR9br67AbfJKw3SwDlWu0CXTMZWYIiMhc=",
       "System.Private.Uri.dll": "sha256-NVHcwf8oFRZ5ZZe+0DXxt8HzWz6lV2R\/\/vLtaqqw+1w=",
-      "System.Runtime.dll": "sha256-8CyYdP8i5EOSHzeemtev7UE5YpEcmvmnrsiTB3KE+oc=",
+      "System.Runtime.dll": "sha256-r+FAP+wwaadd3x7\/j\/XkY41293T51+XnYrw\/1HqyBI0=",
       "System.Runtime.InteropServices.JavaScript.dll": "sha256-xQbATUiyP+9FskXnIZjMPfWI2fliO8eL9DW2ykdx4AY=",
       "System.Text.Encodings.Web.dll": "sha256-dBAu8sl6qcNjD5aAePrxOnRjOf3o+OZvh4IohTnfsNE=",
       "System.Text.Json.dll": "sha256-W\/3nSoCdb39igkACyytmHwZ\/fcdzM3DnjSqIfZ6fj3Y=",
-      "TaxTools.Core.dll": "sha256-OaLfS94Ow3Be5e\/qhm0A2WfHDRz1N2p7P\/uvUzb14Rw=",
-      "TaxTools.dll": "sha256-qxXH\/WiNFb62PeBHjGPk\/5jIOs4ALbU987HMxA3t2c0="
+      "TaxTools.Core.dll": "sha256-i\/xvf4vi\/ObpvhpNtRsRumkvM33pKK4ojZS\/jfchXoI=",
+      "TaxTools.dll": "sha256-o8UjpqbCAvIVJU5LQDgWpYdpUAKvnfZusWKG3f6vXPE="
     },
     "extensions": null,
     "lazyAssembly": null,
