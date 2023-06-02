@@ -31,6 +31,7 @@ else
                         <li>Ownership percent if not 100%</li>
                         <li>Estimated MCR if not pre-filled</li>
                     </ul>
+                    <li>When using SB1 calculation, 2023 MCR will be automatically reduced by 0.10</li>
                     <li>Click Submit</li>
                 </ul>
             </p>
@@ -40,6 +41,13 @@ else
     <EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
         <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
+
+        <div class="form-floating mb-4">
+            <div class="form-check form-switch">
+                <InputCheckbox id="EnableSB1Calculation" @bind-Value="_model.EnableSB1Calculation" class="form-check-input" />
+                <label for="EnableSB1Calculation" class="form-check-label">Enable SB1 calculation (In Preview)</label>
+            </div>
+        </div>
 
         <div class="form-floating mb-3">
             <InputSelect id="DistrictId" class="form-select form-control" @bind-Value="_model.DistrictId">
@@ -68,7 +76,7 @@ else
         {
             var detail = _model.Details[i];
             <div class="row mb-2">
-                <div class="col-md-3">
+                <div class="col">
                     @if (i < _model.Details.Count - 1)
                     {
                         <div class="form-floating">
@@ -77,7 +85,7 @@ else
                         </div>
                     }
                 </div>
-                <div class="col-md-3">
+                <div class="col">
                     <div class="form-floating">
                         <InputNumber id="@($"CeilingAdjustments_{detail.Year}")" @bind-Value="detail.CeilingAdjustment" class="form-control"></InputNumber>
                         @if (i == 0)
@@ -90,7 +98,7 @@ else
                         }
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col">
                     @if (i < _model.Details.Count - 1)
                     {
                         <div class="form-floating">
@@ -99,12 +107,24 @@ else
                         </div>
                     }
                 </div>
-                <div class="col-md-3">
+                <div class="col">
                     <div class="form-floating">
                         <InputNumber id="@($"MCR_{detail.Year}")" @bind-Value="detail.MCR" class="form-control" disabled="@detail.MCRPopulated"></InputNumber>
                         <label for="@($"MCR_{detail.Year}")" class="form-label">@detail.Year MCR</label>
                     </div>
                 </div>
+                @if (_model.EnableSB1Calculation)
+                {
+                    <div class="col">
+                        @if (detail.RequireTaxRate)
+                        {
+                            <div class="form-floating">
+                                <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control"></InputNumber>
+                                <label for="@($"TaxRate_{detail.Year}")" class="form-label">@detail.Year Tax Rate</label>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
         }
 
@@ -121,7 +141,11 @@ else
                     <th scope="col">Starting</th>
                     <th scope="col">Ceiling Adjustments</th>
                     <th scope="col">Taxable Value</th>
-                    <th scope="col">Reduction</th>
+                    <th scope="col">SB 12 Reduction</th>
+                    @if (_model.EnableSB1Calculation)
+                    {
+                        <th scope="col">SB 1 Reduction</th>
+                    }
                     <th scope="col">Running Total</th>
                 </tr>
             </thead>
@@ -136,7 +160,11 @@ else
                             <td>@detail.StartingAmount.ToString("C2")</td>
                             <td>@(i == 0 ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
                             <td>@(detail.TaxableValue.ToString("N0"))</td>
-                            <td><Tooltip Text="@detail.CalculationText">@detail.Reduction.ToString("C2")</Tooltip></td>
+                            <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
+                            @if (_model.EnableSB1Calculation)
+                            {
+                                <td>N/A</td>
+                            }
                             <td>@detail.RunningTotal.ToString("C2")</td>
                         </tr>
                     }
@@ -148,8 +176,12 @@ else
                             <td>@detail.AdditionalImprovement.ToString("C2")</td>
                             <td>N/A</td>
                             <td>N/A</td>
+                            @if (_model.EnableSB1Calculation)
+                            {
+                                <td><Tooltip Text="@detail.SB1CalculationText">@detail.SB1Reduction.ToString("C2")</Tooltip></td>
+                            }
                             <td><b>@detail.RunningTotal.ToString("C2")</b></td>
-                        </tr> 
+                        </tr>
                     }
                 }
             </tbody>
@@ -211,23 +243,25 @@ else
 
             if (detail == null)
             {
-                detail = new Model
+                detail = new DetailModel(_model, i)
                     {
-                        Year = i,
                         TaxableValue = 100000
                     };
                 _model.Details.Insert(i - startYear, detail);
             }
 
-            if (rate != null)
+            if (detail.MCR == null)
             {
-                detail.MCRPopulated = true;
-                detail.MCR = rate.MaximumCompressedRate;
-            }
-            else
-            {
-                detail.MCRPopulated = false;
-                detail.MCR = null;
+                if (rate != null)
+                {
+                    detail.MCRPopulated = true;
+                    detail.MCR = rate.MaximumCompressedRate;
+                }
+                else
+                {
+                    detail.MCRPopulated = false;
+                    detail.MCR = null;
+                }
             }
         }
     }
@@ -237,7 +271,8 @@ else
         var calculationParameters = new CalculationParameters
             {
                 ExemptionQualifyYear = _model.ExemptionQualifyYear,
-                CalculationYear = CalculationYear
+                CalculationYear = CalculationYear,
+                EnableSB1Calculation = _model.EnableSB1Calculation
             };
 
         foreach (var detail in _model.Details)
@@ -245,11 +280,12 @@ else
             calculationParameters.YearDetails.Add(detail.Year, new CalculationParameterYearDetail
                 {
                     MCR = detail.MCR ?? 0,
+                    TaxRate = detail.TaxRate ?? 0,
                     TaxableValue = detail.TaxableValue,
                     OwnershipPercent = detail.OwnershipPercent,
                     CeilingAdjustment = detail.CeilingAdjustment
                 });
         }
-        _calculationResult = Core.Calculator.Calculate(calculationParameters);
+        _calculationResult = Calculator.Calculate(calculationParameters);
     }
 }
