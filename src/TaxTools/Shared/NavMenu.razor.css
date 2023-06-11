@@ -1,14 +1,32 @@
-.navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.top-row {
-    height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+.navbar {
+    padding: 0;
+    height: 4rem;
+    background-color: #f7f7f7;
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
+    font-family: exo;
+    font-weight: bold;
+    font-size: 28px;
+    letter-spacing: 0.1rem;
+    color: #0080BC !important;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-right: 1rem;
+}
+
+.navbar-brand::before {
+    content: "";
+    display: block;
+    height: 3px;
+    background-color: #0080BC;
+}
+
+.navbar-brand::after {
+    content: "";
+    display: block;
+    height: 3px;
+    background-color: #0080BC;
 }
 
 .oi {
@@ -32,7 +50,7 @@
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
+        color: black;
         border-radius: 4px;
         height: 3rem;
         display: flex;
@@ -40,15 +58,15 @@
         line-height: 3rem;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
+        .nav-item ::deep a.active {
+            background-color: rgba(255,255,255,0.25);
+            color: #0080BC;
+        }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: #0080BC;
+        }
 
 @media (min-width: 641px) {
     .navbar-toggler {
@@ -59,10 +77,11 @@
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
-    
+
     .nav-scrollable {
         /* Allow sidebar to scroll for tall menus */
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
+        background-color: #f7f7f7;
     }
 }
