@@ -12,14 +12,27 @@ a, .btn-link {
     color: #0071c1;
 }
 
-.btn-primary {
+.btn {
+    font-family: montserrat;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-align: center;
     color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    height: 40px;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #00ABFB;
+    border-color: #00ABFB;
+    text-transform: uppercase;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.card-header {
+    background-color: #f6fafc;
 }
 
 .content {
