@@ -46,8 +46,8 @@
       "System.Runtime.InteropServices.JavaScript.dll": "sha256-xQbATUiyP+9FskXnIZjMPfWI2fliO8eL9DW2ykdx4AY=",
       "System.Text.Encodings.Web.dll": "sha256-dBAu8sl6qcNjD5aAePrxOnRjOf3o+OZvh4IohTnfsNE=",
       "System.Text.Json.dll": "sha256-W\/3nSoCdb39igkACyytmHwZ\/fcdzM3DnjSqIfZ6fj3Y=",
-      "TaxTools.Core.dll": "sha256-1RKJRLJ0kZaPHQxzfZ+NySO+1KV7rdI9WqHWzXl+Wv4=",
-      "TaxTools.dll": "sha256-vtCZ1UGAVbBMbMOZubOqIMIkyCOSZTtko1Tp1c0IwaM="
+      "TaxTools.Core.dll": "sha256-MAp\/Wxj1J2K0yiIcrVbTIluOCrlxt8EskGdbOPcUYgw=",
+      "TaxTools.dll": "sha256-bX9qMe2pBofqVVojpI7Ut6eMwlKabTE\/OiYyB7UNXr4="
     },
     "extensions": null,
     "lazyAssembly": null,
