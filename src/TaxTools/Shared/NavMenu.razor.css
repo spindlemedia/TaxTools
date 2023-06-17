@@ -4,6 +4,10 @@
     background-color: #f7f7f7;
 }
 
+.navbar-toggler {
+    color: #0080BC;
+}
+
 .navbar-brand {
     font-weight: bold;
     font-size: 28px;
