@@ -20,7 +20,7 @@ else
         <div class="card-body">
             <h5 class="card-title mb-4">
                 <p>This tool has been provided by Spindlemedia to aid in understanding the tax limitation calculation.</p>
-                <p style="font-weight: bold; color: red">Senate Bill 1 is NOT yet law and is subject to change.</p>
+                <p style="font-weight: bold; color: red">Senate Bill 2 is NOT yet law and is subject to change.</p>
             </h5>
             <p class="card-text">
                 Steps:
@@ -34,7 +34,7 @@ else
                         <li>Ownership percent if not 100%</li>
                         <li>Estimated MCR if not pre-filled</li>
                     </ul>
-                    <li>When using SB1 calculation, 2023 MCR will be automatically reduced by 0.10</li>
+                    <li>When using SB2 calculation, 2023 MCR and tax rate will be automatically reduced by 0.107</li>
                     <li>Click Submit</li>
                 </ul>
             </p>
@@ -47,8 +47,8 @@ else
 
         <div class="form-floating mb-2">
             <div class="form-check form-switch">
-                <InputCheckbox id="EnableSB1Calculation" @bind-Value="_model.EnableSB1Calculation" class="form-check-input" />
-                <label for="EnableSB1Calculation" class="form-check-label">Enable SB1 preliminary calculation</label>
+                <InputCheckbox id="EnableSB2Calculation" @bind-Value="_model.EnableSB2Calculation" class="form-check-input" />
+                <label for="EnableSB2Calculation" class="form-check-label">Enable SB2 preliminary calculation</label>
             </div>
         </div>
 
@@ -116,7 +116,7 @@ else
                         <label for="@($"MCR_{detail.Year}")" class="form-label">@detail.Year MCR</label>
                     </div>
                 </div>
-                @if (_model.EnableSB1Calculation)
+                @if (_model.EnableSB2Calculation)
                 {
                     <div class="col-lg">
                         @if (detail.RequireTaxRate)
@@ -145,9 +145,9 @@ else
                     <th scope="col">Ceiling Adjustments</th>
                     <th scope="col">Taxable Value</th>
                     <th scope="col">SB 12 Reduction</th>
-                    @if (_model.EnableSB1Calculation)
+                    @if (_model.EnableSB2Calculation)
                     {
-                        <th scope="col">SB 1 Reduction</th>
+                        <th scope="col">SB 2 Reduction</th>
                     }
                     <th scope="col">Running Total</th>
                 </tr>
@@ -164,11 +164,11 @@ else
                             <td>@(i == 0 ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
                             <td>@(detail.TaxableValue.ToString("N0"))</td>
                             <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
-                            @if (_model.EnableSB1Calculation)
+                            @if (_model.EnableSB2Calculation)
                             {
-                                if (detail.SB1Reduction.HasValue)
+                                if (detail.SB2Reduction.HasValue)
                                 {
-                                    <td><Tooltip Text="@detail.SB1CalculationText">@detail.SB1Reduction.Value.ToString("C2")</Tooltip></td>
+                                    <td><Tooltip Text="@detail.SB2CalculationText">@detail.SB2Reduction.Value.ToString("C2")</Tooltip></td>
                                 }
                                 else
                                 {
@@ -186,11 +186,11 @@ else
                             <td>@detail.AdditionalImprovement.ToString("C2")</td>
                             <td>N/A</td>
                             <td>N/A</td>
-                            @if (_model.EnableSB1Calculation)
+                            @if (_model.EnableSB2Calculation)
                             {
-                                if (detail.SB1Reduction.HasValue)
+                                if (detail.SB2Reduction.HasValue)
                                 {
-                                    <td><Tooltip Text="@detail.SB1CalculationText">@detail.SB1Reduction.Value.ToString("C2")</Tooltip></td>
+                                    <td><Tooltip Text="@detail.SB2CalculationText">@detail.SB2Reduction.Value.ToString("C2")</Tooltip></td>
                                 }
                                 else
                                 {
@@ -289,7 +289,7 @@ else
             {
                 ExemptionQualifyYear = _model.ExemptionQualifyYear,
                 CalculationYear = CalculationYear,
-                EnableSB1Calculation = _model.EnableSB1Calculation
+                EnableSB2Calculation = _model.EnableSB2Calculation
             };
 
         foreach (var detail in _model.Details)

@@ -22,7 +22,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
 
         public bool MCRPopulated { get; set; }
 
-        public bool RequireTaxRate => _parent.EnableSB1Calculation &&
+        public bool RequireTaxRate => _parent.EnableSB2Calculation &&
                                       (( _parent.ExemptionQualifyYear <= 2022 && Year == 2023) || (_parent.ExemptionQualifyYear <= 2021 && Year == 2022));
 
         public DetailModel(CalculatorModel parent, int year)
@@ -41,7 +41,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         [Range(1900, 2023, ErrorMessage = "Exemption Qualify Year must be between 1900 and 2023")]
         public int ExemptionQualifyYear { get; set; }
 
-        public bool EnableSB1Calculation { get; set; }
+        public bool EnableSB2Calculation { get; set; }
 
         [ValidateComplexType]
         public List<DetailModel> Details { get; set; }
