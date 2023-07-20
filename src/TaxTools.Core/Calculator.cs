@@ -50,27 +50,25 @@ namespace TaxTools.Core
             if (year < parameters.CalculationYear)
             {
                 var nextYear = parameters.YearDetails[year + 1];
-                var nextYearMCR = nextYear.MCR;
+                
                 if (parameters.EnableSB2Calculation && year + 1 == 2023 && parameters.ExemptionQualifyYear < 2022)
                 {
-                    nextYearMCR = Math.Max(nextYearMCR - 0.107m, 0);
                     result.SB2Reduction = Math.Round(15000 * curYear.TaxRate / 100, 2);
                     result.SB2CalculationText = $"(15,000 x {curYear.TaxRate}) / 100";
                 }
 
                 var amount =
-                    Math.Round(result.TaxableValue * (curYear.MCR - nextYearMCR) / 100, 2);
+                    Math.Round(result.TaxableValue * (curYear.MCR - nextYear.MCR) / 100, 2);
                 result.SB12Reduction = Math.Max(amount, 0);
                 result.SB12CalculationText =
-                    $"{result.TaxableValue:N0} x ({year} {mcrText} ({curYear.MCR}) - {year + 1} MCR ({nextYearMCR})) / 100";
+                    $"{result.TaxableValue:N0} x ({year} {mcrText} ({curYear.MCR}) - {year + 1} MCR ({nextYear.MCR})) / 100";
             }
             else
             {
                 if (parameters.ExemptionQualifyYear > 2022 || !parameters.EnableSB2Calculation)
                     return result;
-                var taxRate = curYear.TaxRate - 0.107m;
-                result.SB2Reduction = Math.Round(60000 * taxRate / 100, 2);
-                result.SB2CalculationText = $"(60,000 x {taxRate}) / 100";
+                result.SB2Reduction = Math.Round(60000 * curYear.TaxRate / 100, 2);
+                result.SB2CalculationText = $"(60,000 x {curYear.TaxRate}) / 100";
             }
 
             return result;
