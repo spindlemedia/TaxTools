@@ -49,6 +49,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         public CalculatorModel()
         {
             Details = new List<DetailModel>();
+            EnableSB2Calculation = true;
         }
     }
 }
