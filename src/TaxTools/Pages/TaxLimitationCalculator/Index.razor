@@ -267,18 +267,10 @@ else
                 _model.Details.Insert(i - startYear, detail);
             }
 
-            if (detail.MCR == null)
+            if (rate != null)
             {
-                if (rate != null)
-                {
-                    detail.MCRPopulated = true;
-                    detail.MCR = rate.MaximumCompressedRate;
-                }
-                else
-                {
-                    detail.MCRPopulated = false;
-                    detail.MCR = null;
-                }
+                detail.MCRPopulated = true;
+                detail.MCR = rate.MaximumCompressedRate;
             }
         }
     }
