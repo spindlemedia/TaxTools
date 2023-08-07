@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="school-district-adopted-tax-rates.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="tea_rates.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -122,7 +122,7 @@ else
                         @if (detail.RequireTaxRate)
                         {
                             <div class="form-floating">
-                                <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control"></InputNumber>
+                                <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control" disabled="@detail.TaxRatePopulated"></InputNumber>
                                 <label for="@($"TaxRate_{detail.Year}")" class="form-label">@detail.Year Total Tax Rate</label>
                             </div>
                         }
@@ -271,6 +271,12 @@ else
             {
                 detail.MCRPopulated = true;
                 detail.MCR = rate.MaximumCompressedRate;
+            }
+
+            if (rate.TotalTaxRate.HasValue)
+            {
+                detail.TaxRate = rate.TotalTaxRate.Value;
+                detail.TaxRatePopulated = true;
             }
         }
     }
