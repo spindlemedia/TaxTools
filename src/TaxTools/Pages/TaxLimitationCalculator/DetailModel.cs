@@ -21,6 +21,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         public decimal? TaxRate { get; set; }
 
         public bool MCRPopulated { get; set; }
+        public bool TaxRatePopulated { get; set; }
 
         public bool RequireTaxRate => _parent.EnableSB2Calculation &&
                                       (( _parent.ExemptionQualifyYear <= 2022 && Year == 2023) || (_parent.ExemptionQualifyYear <= 2021 && Year == 2022));
