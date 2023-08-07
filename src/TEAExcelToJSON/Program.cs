@@ -66,7 +66,10 @@ static List<SpreadsheetDetail> ProcessTable(DataTable table)
     {
         var compressedColumn = year == 2018 ? "COMPRESSED M&O TAX RATE" : "MAXIMUM COMPRESSED M&O TAX RATE";
         var compressedRate = (decimal)Math.Round((double)row[compressedColumn], 4);
-        var moRate = (decimal)Math.Round((double)row["M&O TAX RATE"], 4);
+        var rawMORate = row["M&O TAX RATE"].ToString();
+        decimal? moRate = null;
+        if (!string.IsNullOrEmpty(rawMORate))
+            moRate = (decimal)Math.Round((double)row["M&O TAX RATE"], 4);
         details.Add(new SpreadsheetDetail(year, (string)row["DISTRICT_ID"], (string)row["DISTNAME"], compressedRate, moRate));
     }
     return details;
@@ -74,5 +77,5 @@ static List<SpreadsheetDetail> ProcessTable(DataTable table)
 
 namespace TEAExcelToJSON
 {
-    public record SpreadsheetDetail(int Year, string DistrictId, string DistrictName, decimal MaximumCompressedRate, decimal ActualMORate);
+    public record SpreadsheetDetail(int Year, string DistrictId, string DistrictName, decimal MaximumCompressedRate, decimal? ActualMORate);
 }
