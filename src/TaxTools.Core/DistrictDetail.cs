@@ -12,6 +12,6 @@
         public int Year { get; set; }
         //Compressed M&O rate for 2018, MCR for 2019+
         public decimal MaximumCompressedRate { get; set; }
-        public decimal ActualMORate { get; set; }
+        public decimal? ActualMORate { get; set; }
     }
 }
