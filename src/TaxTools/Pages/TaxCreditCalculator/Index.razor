@@ -1,0 +1,119 @@
+@page "/TaxCreditCalculator"
+@using TaxTools.Core
+@using TaxTools.Core.TaxCredit
+@inject HttpClient Http
+
+<PageTitle>313 Tax Credit Calculator</PageTitle>
+
+<h2>313 Tax Credit Calculator</h2>
+
+
+<div class="card mb-3">
+    <div class="card-header">
+        Instructions
+    </div>
+    <div class="card-body">
+        <h5 class="card-title mb-4">
+            <p>This tool has been provided by Spindlemedia to help in calculating tax credits on accounts with a limitation under Chapter 313.</p>
+            <p>
+                Spindlemedia's tax system handles the 313 limitation by creating an exemption to reduce the taxable value down to the limitation amount (for example $30 or $80 million).
+                The base levy is then the full M&O and I&S at the capped value. This exemption amount is then multiplied by the I&S rate and creates a special tax due for I&S taxes.
+            </p>
+            <p>
+                In the event an additional tax credit has to be applied, this calculator then helps determine what amounts need to be in the system to accurately calculate the taxes.
+            </p>
+        </h5>
+        <p class="card-text">
+            Steps:
+            <ul>
+                <li>Enter the following information:</li>
+                <ul>
+                    <li>Market value</li>
+                    <li>Limitation Amount (i.e $30,000,000)</li>
+                    <li>Tax Rate</li>
+                    <li>Tax Credit in $</li>
+                </ul>
+                <li>Click Submit</li>
+            </ul>
+        </p>
+    </div>
+</div>
+
+<EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
+    <ObjectGraphDataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-floating mb-2">
+        <InputNumber id="MarketValue" @bind-Value="_model.MarketValue" class="form-control" />
+        <label for="MarketValue" class="form-label">Market Value</label>
+    </div>
+
+    <div class="form-floating mb-2">
+        <InputNumber id="LimitationAmount" @bind-Value="_model.LimitationAmount" class="form-control" />
+        <label for="LimitationAmount" class="form-label">LimitationAmount</label>
+    </div>
+
+    <div class="form-floating">
+        <InputNumber id="MORate" @bind-Value="_model.MORate" class="form-control" />
+        <label for="MORate" class="form-label">M&O Rate</label>
+    </div>
+
+    <div class="form-floating">
+        <InputNumber id="ISRate" @bind-Value="_model.ISRate" class="form-control" />
+        <label for="ISRate" class="form-label">I&S Rate</label>
+    </div>
+
+    <div class="form-floating">
+        <InputNumber id="TaxCredit" @bind-Value="_model.TaxCredit" class="form-control" />
+        <label for="TaxCredit" class="form-label">Tax Credit</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</EditForm>
+
+@if (_calculationResult != null)
+{
+    <div class="form-floating mb-2 mt-2">
+        <InputNumber id="LevyPreCredit" @bind-Value="_calculationResult.LevyPreCredit" class="form-control" disabled="true" />
+        <label for="LevyPreCredit" class="form-label">Levy pre-credit</label>
+    </div>
+
+    <div class="form-floating mb-2 mt-2">
+        <InputNumber id="LimitationExemption" @bind-Value="_calculationResult.LimitationExemptionAmount" class="form-control" disabled="true" />
+        <label for="LimitationExemption" class="form-label">Limitation Exemption</label>
+    </div>
+
+    <div class="form-floating mb-2">
+        <InputNumber id="TaxCreditExemption" @bind-Value="_calculationResult.TaxCreditExemptionAmount" class="form-control" disabled="true" />
+        <label for="TaxCreditExemption" class="form-label">Tax Credit Exemption</label>
+    </div>
+
+    <div class="form-floating mb-2 mt-2">
+        <InputNumber id="CalculatedTax" @bind-Value="_calculationResult.CalculatedTax" class="form-control" disabled="true" />
+        <label for="CalculatedTax" class="form-label">CalculatedTax</label>
+    </div>
+}
+
+@code {
+    private EditContext? _editContext;
+    private readonly CalculatorModel _model = new();
+    private CalculationResult _calculationResult;
+
+    protected override void OnInitialized()
+    {
+        _editContext = new(_model);
+    }
+
+    private void HandleValidSubmit()
+    {
+        var calculationParameters = new CalculationParameters
+        {
+            MarketValue = _model.MarketValue,
+            LimitationAmount = _model.LimitationAmount,
+            ISRate = _model.ISRate ?? 0,
+            MORate = _model.MORate ?? 0,
+            TaxCredit = _model.TaxCredit ?? 0
+        };
+        _calculationResult = Calculator.Calculate(calculationParameters);
+    }
+}

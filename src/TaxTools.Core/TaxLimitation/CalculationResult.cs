@@ -1,4 +1,4 @@
-﻿namespace TaxTools.Core
+﻿namespace TaxTools.Core.TaxLimitation
 {
     public class CalculationResult
     {
