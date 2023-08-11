@@ -53,8 +53,9 @@ namespace TaxTools.Core
                 
                 if (parameters.EnableSB2Calculation && year + 1 == 2023 && parameters.ExemptionQualifyYear < 2022)
                 {
-                    result.SB2Reduction = Math.Round(15000 * curYear.TaxRate / 100, 2);
-                    result.SB2CalculationText = $"(15,000 x {curYear.TaxRate}) / 100";
+                    var exemptAmount = 15000 * (curYear.OwnershipPercent / 100);
+                    result.SB2Reduction = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                    result.SB2CalculationText = $"({exemptAmount:N0} x {curYear.TaxRate}) / 100";
                 }
 
                 var amount =
@@ -67,8 +68,9 @@ namespace TaxTools.Core
             {
                 if (parameters.ExemptionQualifyYear > 2022 || !parameters.EnableSB2Calculation)
                     return result;
-                result.SB2Reduction = Math.Round(60000 * curYear.TaxRate / 100, 2);
-                result.SB2CalculationText = $"(60,000 x {curYear.TaxRate}) / 100";
+                var exemptAmount = 60000 * (curYear.OwnershipPercent / 100);
+                result.SB2Reduction = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                result.SB2CalculationText = $"({exemptAmount:N0} x {curYear.TaxRate}) / 100";
             }
 
             return result;

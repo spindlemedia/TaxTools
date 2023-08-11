@@ -102,13 +102,10 @@ else
                     </div>
                 </div>
                 <div class="col-lg">
-                    @if (i < _model.Details.Count - 1)
-                    {
-                        <div class="form-floating">
-                            <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
-                            <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
-                        </div>
-                    }
+                    <div class="form-floating">
+                        <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
+                        <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
+                    </div>
                 </div>
                 <div class="col-lg">
                     <div class="form-floating">
