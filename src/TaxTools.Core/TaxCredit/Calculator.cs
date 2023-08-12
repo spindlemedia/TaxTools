@@ -5,7 +5,7 @@ namespace TaxTools.Core.TaxCredit
     {
         public static CalculationResult Calculate(CalculationParameters parameters)
         {
-            var limitationExemption = parameters.MarketValue - parameters.LimitationAmount;
+            var limitationExemption = Math.Max(parameters.MarketValue - parameters.LimitationAmount, 0);
             var limitedLevy = Math.Round(parameters.LimitationAmount * parameters.TotalTaxRate / 100, 2);
             var isLevy = Math.Round(limitationExemption * parameters.ISRate / 100, 2);
             var levyPreCredit = limitedLevy + isLevy;
