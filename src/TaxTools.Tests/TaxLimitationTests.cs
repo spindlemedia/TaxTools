@@ -1,9 +1,9 @@
 using Shouldly;
-using TaxTools.Core;
+using TaxTools.Core.TaxLimitation;
 
 namespace TaxTools.Tests
 {
-    public class CalculationTests
+    public class TaxLimitationTests
     {
         [Fact]
         public void ShouldCalculateForSingleYear()

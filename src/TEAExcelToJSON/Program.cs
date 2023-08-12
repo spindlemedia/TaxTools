@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Text.Json;
 using ExcelDataReader;
-using TaxTools.Core;
+using TaxTools.Core.TaxLimitation;
 
 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 

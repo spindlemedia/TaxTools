@@ -1,9 +1,9 @@
-﻿namespace TaxTools.Core
+﻿namespace TaxTools.Core.TaxLimitation
 {
     public class DistrictDetail
     {
         public string DistrictId { get; set; }
-        public string DistrictName { get; set;}
+        public string DistrictName { get; set; }
         public List<DistrictRateDetail> Rates { get; set; }
     }
 

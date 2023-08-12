@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace TaxTools.Core
+﻿namespace TaxTools.Core.TaxLimitation
 {
     public static class Calculator
     {
@@ -50,7 +48,6 @@ namespace TaxTools.Core
             if (year < parameters.CalculationYear)
             {
                 var nextYear = parameters.YearDetails[year + 1];
-                
                 if (parameters.EnableSB2Calculation && year + 1 == 2023 && parameters.ExemptionQualifyYear < 2022)
                 {
                     var exemptAmount = 15000 * (curYear.OwnershipPercent / 100);
