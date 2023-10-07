@@ -1,4 +1,6 @@
-﻿namespace TaxTools.Core.TaxLimitation
+﻿using System.Text;
+
+namespace TaxTools.Core.TaxLimitation
 {
     public static class Calculator
     {
@@ -48,13 +50,6 @@
             if (year < parameters.CalculationYear)
             {
                 var nextYear = parameters.YearDetails[year + 1];
-                if (parameters.EnableSB2Calculation && year + 1 == 2023 && parameters.ExemptionQualifyYear < 2022)
-                {
-                    var exemptAmount = 15000 * (curYear.OwnershipPercent / 100);
-                    result.SB2Reduction = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
-                    result.SB2CalculationText = $"({exemptAmount:N0} x {curYear.TaxRate}) / 100";
-                }
-
                 var amount =
                     Math.Round(result.TaxableValue * (curYear.MCR - nextYear.MCR) / 100, 2);
                 result.SB12Reduction = Math.Max(amount, 0);
@@ -63,11 +58,24 @@
             }
             else
             {
-                if (parameters.ExemptionQualifyYear > 2022 || !parameters.EnableSB2Calculation)
+                if (!parameters.EnableSB2Calculation)
                     return result;
-                var exemptAmount = 60000 * (curYear.OwnershipPercent / 100);
-                result.SB2Reduction = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
-                result.SB2CalculationText = $"({exemptAmount:N0} x {curYear.TaxRate}) / 100";
+
+                var sb = new StringBuilder();
+                if (parameters.ExemptionQualifyYear < 2022)
+                {
+                    var prevYear = parameters.YearDetails[year - 1];
+                    var exemptAmount = 15000 * (prevYear.OwnershipPercent / 100);
+                    result.SB2Reduction = Math.Round(exemptAmount * prevYear.TaxRate / 100, 2);
+                    sb.Append($"({exemptAmount:N0} x {prevYear.TaxRate} / 100) + ");
+                }
+                if (parameters.ExemptionQualifyYear < 2023)
+                {
+                    var exemptAmount = 60000 * (curYear.OwnershipPercent / 100);
+                    result.SB2Reduction += Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                    sb.Append($"({exemptAmount:N0} x {curYear.TaxRate} / 100)");
+                }
+                result.SB2CalculationText = sb.ToString();
             }
 
             return result;
