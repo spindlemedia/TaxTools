@@ -72,7 +72,11 @@ namespace TaxTools.Core.TaxLimitation
                 if (parameters.ExemptionQualifyYear < 2023)
                 {
                     var exemptAmount = 60000 * (curYear.OwnershipPercent / 100);
-                    result.SB2Reduction += Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                    var sb2Amount = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                    if (result.SB2Reduction == null)
+                        result.SB2Reduction = sb2Amount;
+                    else
+                        result.SB2Reduction += sb2Amount;
                     sb.Append($"({exemptAmount:N0} x {curYear.TaxRate} / 100)");
                 }
                 result.SB2CalculationText = sb.ToString();
