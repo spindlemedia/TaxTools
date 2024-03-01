@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "TaxTools",
   "resources": {
-    "hash": "sha256-xspmY9GaUMZSxxLki1SsnyGw5/WfdRs/0XwmqU8QaYs=",
+    "hash": "sha256-1ZjBkyPGiivNlSVKjd5OrFjt1kharSGgVdLZulIkyZg=",
     "jsModuleNative": {
       "dotnet.native.8.0.2.jgt5nhn140.js": "sha256-gPMK16QWoJSTxorlZJqcVtbBRTniIQWlLsJN2O4cJHg="
     },
@@ -55,13 +55,13 @@
       "System.Private.Uri.wasm": "sha256-6EgwnNrmCneKsUYXnr/FOv1l/tOvIU3hz2V/5nM1F/I=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-2fNHxcvnXYStlUf+e1IokgsFZFUyJVv1w3Tf2NEhDBQ=",
       "System.Runtime.Serialization.Primitives.wasm": "sha256-XlUDXtLi4YeIqizDT48xGocBzreAzTBALjZC1rcZzUY=",
-      "System.Runtime.wasm": "sha256-P7UBPL8RuWpyKYPZDomfRnPVoTTnS6QzJmtBNfyqzZo=",
+      "System.Runtime.wasm": "sha256-Usn0Kr9pYxo4udH9tgd4wsK3xJkRoc1B9MCdsG3qezw=",
       "System.Text.Encodings.Web.wasm": "sha256-NnePSWCgIId8nOPCgziTKhDyG6uCBs+3W6fazrWLoUA=",
       "System.Text.Json.wasm": "sha256-QY7URiQ8DBTkV87+KL73IMLVcDFwe2UifYEvVl/BRKM=",
       "System.Text.RegularExpressions.wasm": "sha256-g37JZZGWS6LK/Dhde0aHkzXKMxE/xwZwC2Ci4rgcwFc=",
       "System.wasm": "sha256-n7POuPtNGmUEzGtZKZtOEEpj+CuOoQ/qVWMgWhN7NXU=",
-      "TaxTools.Core.wasm": "sha256-7BNFl/LqGXkAVRednVOUhYcuiUVadO3zxV7Y1mUgV8s=",
-      "TaxTools.wasm": "sha256-ZK3evROSCkoefNXAQjPgTj0LcmQJ1FfmmzuPhP+JFOc="
+      "TaxTools.Core.wasm": "sha256-36XwhBJvYcNzAOYPWlzCOVkAf3TbcQUaDyN4XM3UyaA=",
+      "TaxTools.wasm": "sha256-we9QvGfdcfrs4O5pWPC+6LUvymoDtSGjun0BkIELH14="
     }
   },
   "cacheBootResources": true,
