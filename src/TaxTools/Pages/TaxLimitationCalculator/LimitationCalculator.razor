@@ -1,0 +1,272 @@
+﻿@using TaxTools.Core.TaxLimitation
+@inject HttpClient Http
+
+<EditForm EditContext="@_editContext" OnValidSubmit="@HandleValidSubmit">
+    <ObjectGraphDataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-floating mb-2">
+        <div class="form-check form-switch">
+            <InputCheckbox id="EnableSB2Calculation" @bind-Value="_model.EnableSB2Calculation" class="form-check-input" />
+            <label for="EnableSB2Calculation" class="form-check-label">Enable SB2 calculation</label>
+        </div>
+    </div>
+
+    <div class="form-floating mb-2">
+        <InputSelect id="DistrictId" class="form-select form-control" @bind-Value="_model.DistrictId">
+            @if (_model.DistrictId is null)
+            {
+                <option selected value="">None</option>
+            }
+            @foreach (var district in Districts.OrderBy(d => d.DistrictName))
+            {
+                <option value="@district.DistrictId">@district.DistrictName (@district.DistrictId)</option>
+            }
+            @if (_model.DistrictId is not null)
+            {
+                <option value="">None</option>
+            }
+        </InputSelect>
+        <label for="DistrictId" class="form-label">District</label>
+    </div>
+
+    <div class="form-floating mb-2">
+        <InputNumber id="TaxYear" @bind-Value="_model.TaxYear" class="form-control" />
+        <label for="TaxYear" class="form-label">Effective Tax Year</label>
+    </div>
+
+    <div class="form-floating mb-2">
+        <InputNumber id="QualifyYear" @bind-Value="_model.ExemptionQualifyYear" class="form-control" />
+        <label for="QualifyYear" class="form-label">Over 65 / Disabled qualify year</label>
+    </div>
+
+    @for (var i = 0; i < _model.Details.Count; i++)
+    {
+        var detail = _model.Details[i];
+        <div class="row mb-2 gx-1 gy-2">
+            <div class="col-lg">
+                @if (i < _model.Details.Count - 1)
+                {
+                    <div class="form-floating">
+                        <InputNumber id="@($"TaxableValue_{detail.Year}")" @bind-Value="detail.TaxableValue" class="form-control"></InputNumber>
+                        <label for="@($"TaxableValue_{detail.Year}")" class="form-label">@detail.Year HS Taxable Value</label>
+                    </div>
+                }
+            </div>
+            <div class="col-lg">
+                <div class="form-floating">
+                    <InputNumber id="@($"CeilingAdjustments_{detail.Year}")" @bind-Value="detail.CeilingAdjustment" class="form-control"></InputNumber>
+                    @if (i == 0)
+                    {
+                        <label for="@($"CeilingAdjustments_{detail.Year}")" class="form-label">@detail.Year Ceiling Amount</label>
+                    }
+                    else
+                    {
+                        <label for="@($"CeilingAdjustments_{detail.Year}")" class="form-label">@detail.Year Ceiling Adjustments</label>
+                    }
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="form-floating">
+                    <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
+                    <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
+                </div>
+            </div>
+            <div class="col-lg">
+                <div class="form-floating">
+                    <InputNumber id="@($"MCR_{detail.Year}")" @bind-Value="detail.MCR" class="form-control" disabled="@detail.MCRPopulated"></InputNumber>
+                    <label for="@($"MCR_{detail.Year}")" class="form-label">@detail.Year MCR</label>
+                </div>
+            </div>
+            @if (_model.EnableSB2Calculation)
+            {
+                <div class="col-lg">
+                    @if (detail.RequireTaxRate)
+                    {
+                        <div class="form-floating">
+                            <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control" disabled="@detail.TaxRatePopulated"></InputNumber>
+                            <label for="@($"TaxRate_{detail.Year}")" class="form-label">@detail.Year Total Tax Rate</label>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</EditForm>
+
+@if (_calculationResult != null)
+{
+    <table class="table caption-top">
+        <caption>Result</caption>
+        <thead>
+            <tr>
+                <th scope="col">Year</th>
+                <th scope="col">Starting</th>
+                <th scope="col">Ceiling Adjustments</th>
+                <th scope="col">Taxable Value</th>
+                <th scope="col">SB 12 Reduction</th>
+                @if (_model.EnableSB2Calculation)
+                {
+                    <th scope="col">SB 2 Reduction</th>
+                }
+                <th scope="col">Running Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < _calculationResult.Details.Count; i++)
+            {
+                var detail = _calculationResult.Details[i];
+                if (i < _calculationResult.Details.Count - 1)
+                {
+                    <tr>
+                        <th scope="row">@detail.Year</th>
+                        <td>@detail.StartingAmount.ToString("C2")</td>
+                        <td>@(i == 0 ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
+                        <td>@(detail.TaxableValue.ToString("N0"))</td>
+                        <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
+                        @if (_model.EnableSB2Calculation)
+                        {
+                            if (detail.SB2Reduction.HasValue)
+                            {
+                                <td><Tooltip Text="@detail.SB2CalculationText">@detail.SB2Reduction.Value.ToString("C2")</Tooltip></td>
+                            }
+                            else
+                            {
+                                <td>N/A</td>
+                            }
+                        }
+                        <td>@detail.RunningTotal.ToString("C2")</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th scope="row">@detail.Year</th>
+                        <td>@detail.StartingAmount.ToString("C2")</td>
+                        <td>@detail.AdditionalImprovement.ToString("C2")</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        @if (_model.EnableSB2Calculation)
+                        {
+                            if (detail.SB2Reduction.HasValue)
+                            {
+                                <td><Tooltip Text="@detail.SB2CalculationText">@detail.SB2Reduction.Value.ToString("C2")</Tooltip></td>
+                            }
+                            else
+                            {
+                                <td>N/A</td>
+                            }
+                        }
+                        <td><b>@detail.RunningTotal.ToString("C2")</b></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private EditContext? _editContext;
+    private readonly CalculatorModel _model = new();
+    private CalculationResult _calculationResult;
+
+    [Parameter]
+    public DistrictDetail[] Districts { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _editContext = new(_model);
+        _editContext.OnFieldChanged += EditFieldChanged;
+        _model.ExemptionQualifyYear = 2018;
+        UpdateModelYears();
+    }
+
+    private void EditFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (e.FieldIdentifier.FieldName is nameof(CalculatorModel.ExemptionQualifyYear) or nameof(CalculatorModel.DistrictId) or nameof(CalculatorModel.TaxYear))
+        {
+            UpdateModelYears();
+        }
+    }
+
+    private void UpdateModelYears()
+    {
+        if (string.IsNullOrEmpty(_model.DistrictId))
+            return;
+
+        var dist = Districts.FirstOrDefault(d => d.DistrictId == _model.DistrictId);
+
+        if (dist == null)
+            return;
+
+        var taxYear = _model.TaxYear;
+        int startYear;
+        if (taxYear == 2023)
+            startYear = Math.Max(_model.ExemptionQualifyYear, 2018);
+        else
+            startYear = taxYear - 1;
+
+        if (_model.Details.Count > 0)
+        {
+            for (var x = _model.Details.Count - 1; x >= 0; x--)
+            {
+                var detail = _model.Details[x];
+
+                if (detail.Year < startYear)
+                    _model.Details.RemoveAt(x);
+            }
+        }
+
+        for (var i = startYear; i <= _model.TaxYear; i++)
+        {
+            var rate = dist.Rates.FirstOrDefault(r => r.Year == i);
+            var detail = _model.Details.FirstOrDefault(d => d.Year == i);
+
+            if (detail == null)
+            {
+                detail = new DetailModel(_model, i)
+                    {
+                        TaxableValue = 100000
+                    };
+                _model.Details.Insert(i - startYear, detail);
+            }
+
+            if (rate != null)
+            {
+                detail.MCRPopulated = true;
+                detail.MCR = rate.MaximumCompressedRate;
+                if (rate.TotalTaxRate.HasValue)
+                {
+                    detail.TaxRate = rate.TotalTaxRate.Value;
+                    detail.TaxRatePopulated = true;
+                }
+            }
+        }
+    }
+
+    private void HandleValidSubmit()
+    {
+        var calculationParameters = new CalculationParameters
+            {
+                ExemptionQualifyYear = _model.ExemptionQualifyYear,
+                CalculationYear = _model.TaxYear,
+                EnableSB2Calculation = _model.EnableSB2Calculation
+            };
+
+        foreach (var detail in _model.Details)
+        {
+            calculationParameters.YearDetails.Add(detail.Year, new CalculationParameterYearDetail
+                {
+                    MCR = detail.MCR ?? 0,
+                    TaxRate = detail.TaxRate ?? 0,
+                    TaxableValue = detail.TaxableValue,
+                    OwnershipPercent = detail.OwnershipPercent,
+                    CeilingAdjustment = detail.CeilingAdjustment
+                });
+        }
+        _calculationResult = Calculator.Calculate(calculationParameters);
+    }
+}
