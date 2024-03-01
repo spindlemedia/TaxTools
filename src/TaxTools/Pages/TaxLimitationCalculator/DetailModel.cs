@@ -39,7 +39,10 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         [Required(ErrorMessage = "You must select a school district")]
         public string? DistrictId { get; set; }
 
-        [Range(1900, 2023, ErrorMessage = "Exemption Qualify Year must be between 1900 and 2023")]
+        [Range(2023, 2050, ErrorMessage = "Tax Year must be 2023 or greater")]
+        public int TaxYear { get; set; }
+
+        [Range(1900, 2050, ErrorMessage = "Exemption Qualify Year must be greater than 1900")]
         public int ExemptionQualifyYear { get; set; }
 
         public bool EnableSB2Calculation { get; set; }
@@ -51,6 +54,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         {
             Details = new List<DetailModel>();
             EnableSB2Calculation = true;
+            TaxYear = 2023;
         }
     }
 }
