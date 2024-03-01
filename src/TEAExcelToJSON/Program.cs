@@ -15,34 +15,8 @@ var config = new ExcelDataSetConfiguration
 };
 
 var taxRates = new Dictionary<(string DistrictId, int Year), decimal>();
-
-using (var stream = File.Open("school-district-adopted-tax-rates.xlsx", FileMode.Open, FileAccess.Read))
-{
-    using (var reader = ExcelReaderFactory.CreateReader(stream))
-    {
-        var result = reader.AsDataSet(config);
-        var table = result.Tables[0];
-        foreach (DataRow row in table.Rows)
-        {
-            var districtId = (string)row[0];
-            for (var i = 2; i < table.Columns.Count; i += 2)
-            {
-                if (string.IsNullOrEmpty(row[i].ToString()))
-                    continue;
-
-                var year = int.Parse(table.Columns[i].ColumnName.Trim().Substring(0, 4));
-                var moRate = (decimal)Math.Round((double)row[i], 4);
-
-                var isRateRaw = row[i + 1].ToString();
-                decimal isRate = 0;
-                if (!string.IsNullOrEmpty(isRateRaw))
-                    isRate = (decimal)Math.Round((double)row[i + 1], 4);
-
-                taxRates.Add((districtId, year), moRate + isRate);
-            }
-        }
-    }
-}
+ReadHistoricalRates(config, taxRates);
+ReadComptrollerRates(config, 2023, taxRates);
 
 var spreadsheetDetails = new List<SpreadsheetDetail>();
 using (var stream = File.Open("tea_rates.xlsx", FileMode.Open, FileAccess.Read))
@@ -107,5 +81,54 @@ List<SpreadsheetDetail> ProcessTable(DataTable table)
     return details;
 }
 
+void ReadHistoricalRates(ExcelDataSetConfiguration excelDataSetConfiguration, Dictionary<(string DistrictId, int Year), decimal> dictionary)
+{
+    using (var stream = File.Open("school-district-adopted-tax-rates.xlsx", FileMode.Open, FileAccess.Read))
+    {
+        using (var reader = ExcelReaderFactory.CreateReader(stream))
+        {
+            var result = reader.AsDataSet(excelDataSetConfiguration);
+            var table = result.Tables[0];
+            foreach (DataRow row in table.Rows)
+            {
+                var districtId = (string)row[0];
+                for (var i = 2; i < table.Columns.Count; i += 2)
+                {
+                    if (string.IsNullOrEmpty(row[i].ToString()))
+                        continue;
+
+                    var year = int.Parse(table.Columns[i].ColumnName.Trim().Substring(0, 4));
+                    var moRate = (decimal)Math.Round((double)row[i], 4);
+
+                    var isRateRaw = row[i + 1].ToString();
+                    decimal isRate = 0;
+                    if (!string.IsNullOrEmpty(isRateRaw))
+                        isRate = (decimal)Math.Round((double)row[i + 1], 4);
+
+                    dictionary.Add((districtId, year), moRate + isRate);
+                }
+            }
+        }
+    }
+}
+
+void ReadComptrollerRates(ExcelDataSetConfiguration excelDataSetConfiguration, short year, Dictionary<(string DistrictId, int Year), decimal> dictionary)
+{
+    using (var stream = File.Open("2023-school-district-rates-levies.xlsx", FileMode.Open, FileAccess.Read))
+    {
+        using (var reader = ExcelReaderFactory.CreateReader(stream))
+        {
+            var result = reader.AsDataSet(excelDataSetConfiguration);
+            var table = result.Tables[1];
+            for (var x = 3; x < table.Rows.Count; x++)
+            {
+                var row = table.Rows[x];
+                var districtId = ((string)row[1]).Replace("-", string.Empty).Substring(0, 6);
+                var rate = (double)row[11];
+                dictionary.Add((districtId, year), (decimal)rate);
+            }
+        }
+    }
+}
 
 public record SpreadsheetDetail(int Year, string DistrictId, string DistrictName, decimal MaximumCompressedRate, decimal? ActualMORate, decimal? TotalTaxRate);

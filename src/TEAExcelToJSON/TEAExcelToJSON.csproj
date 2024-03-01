@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="2023-school-district-rates-levies.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="school-district-adopted-tax-rates.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
