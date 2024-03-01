@@ -71,6 +71,11 @@ else
         </div>
 
         <div class="form-floating mb-2">
+            <InputNumber id="TaxYear" @bind-Value="_model.TaxYear" class="form-control" />
+            <label for="TaxYear" class="form-label">Effective Tax Year</label>
+        </div>
+
+        <div class="form-floating mb-2">
             <InputNumber id="QualifyYear" @bind-Value="_model.ExemptionQualifyYear" class="form-control" />
             <label for="QualifyYear" class="form-label">Over 65 / Disabled qualify year</label>
         </div>
@@ -208,7 +213,6 @@ else
     private EditContext? _editContext;
     private readonly CalculatorModel _model = new();
     private CalculationResult _calculationResult;
-    private const int CalculationYear = 2023;
 
     protected override async Task OnInitializedAsync()
     {
@@ -221,7 +225,7 @@ else
 
     private void EditFieldChanged(object? sender, FieldChangedEventArgs e)
     {
-        if (e.FieldIdentifier.FieldName is nameof(CalculatorModel.ExemptionQualifyYear) or nameof(CalculatorModel.DistrictId))
+        if (e.FieldIdentifier.FieldName is nameof(CalculatorModel.ExemptionQualifyYear) or nameof(CalculatorModel.DistrictId) or nameof(CalculatorModel.TaxYear))
         {
             UpdateModelYears();
         }
@@ -237,7 +241,12 @@ else
         if (dist == null)
             return;
 
-        var startYear = Math.Max(_model.ExemptionQualifyYear, 2018);
+        var taxYear = _model.TaxYear;
+        int startYear;
+        if (taxYear == 2023)
+            startYear = Math.Max(_model.ExemptionQualifyYear, 2018);
+        else
+            startYear = taxYear - 1;
 
         if (_model.Details.Count > 0)
         {
@@ -250,7 +259,7 @@ else
             }
         }
 
-        for (var i = startYear; i <= CalculationYear; i++)
+        for (var i = startYear; i <= _model.TaxYear; i++)
         {
             var rate = dist.Rates.FirstOrDefault(r => r.Year == i);
             var detail = _model.Details.FirstOrDefault(d => d.Year == i);
@@ -268,12 +277,11 @@ else
             {
                 detail.MCRPopulated = true;
                 detail.MCR = rate.MaximumCompressedRate;
-            }
-
-            if (rate.TotalTaxRate.HasValue)
-            {
-                detail.TaxRate = rate.TotalTaxRate.Value;
-                detail.TaxRatePopulated = true;
+                if (rate.TotalTaxRate.HasValue)
+                {
+                    detail.TaxRate = rate.TotalTaxRate.Value;
+                    detail.TaxRatePopulated = true;
+                }
             }
         }
     }
@@ -283,7 +291,7 @@ else
         var calculationParameters = new CalculationParameters
             {
                 ExemptionQualifyYear = _model.ExemptionQualifyYear,
-                CalculationYear = CalculationYear,
+                CalculationYear = _model.TaxYear,
                 EnableSB2Calculation = _model.EnableSB2Calculation
             };
 

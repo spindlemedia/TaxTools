@@ -12,15 +12,22 @@ namespace TaxTools.Core.TaxLimitation
             };
 
             decimal? runningTotal = null;
+            short startYear;
+
             if (parameters.CalculationYear == 2023)
             {
-                var startYear = parameters.ExemptionQualifyYear < 2019 ? 2018 : parameters.ExemptionQualifyYear;
-                for (var year = startYear; year <= parameters.CalculationYear; year++)
-                {
-                    var detail = CalculateYear(parameters, year, runningTotal);
-                    result.Details.Add(detail);
-                    runningTotal = detail.RunningTotal;
-                }
+                startYear = (short)(parameters.ExemptionQualifyYear < 2019 ? 2018 : parameters.ExemptionQualifyYear);
+            }
+            else
+            {
+                startYear = (short)(parameters.CalculationYear - 1);
+            }
+
+            for (var year = startYear; year <= parameters.CalculationYear; year++)
+            {
+                var detail = CalculateYear(parameters, year, runningTotal);
+                result.Details.Add(detail);
+                runningTotal = detail.RunningTotal;
             }
 
             result.CalculatedCeiling = runningTotal ?? 0;
@@ -58,7 +65,7 @@ namespace TaxTools.Core.TaxLimitation
             }
             else
             {
-                if (!parameters.EnableSB2Calculation)
+                if (!parameters.EnableSB2Calculation || parameters.CalculationYear != 2023)
                     return result;
 
                 var sb = new StringBuilder();
