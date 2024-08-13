@@ -7,7 +7,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
             var model = (DetailModel)context.ObjectInstance;
-            if (!model.RequireTaxRate)
+            if (!model.RequireSB2Data)
                 return ValidationResult.Success;
 
             var taxRate = value as decimal?;

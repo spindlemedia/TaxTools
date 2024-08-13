@@ -52,7 +52,7 @@ namespace TaxTools.Core.TaxLimitation
                 result.AdditionalImprovement = curYear.CeilingAdjustment;
             }
 
-            result.TaxableValue = (int)Math.Round(curYear.TaxableValue * (curYear.OwnershipPercent / 100), 0);
+            result.TaxableValue = curYear.TaxableValue;
 
             if (year < parameters.CalculationYear)
             {

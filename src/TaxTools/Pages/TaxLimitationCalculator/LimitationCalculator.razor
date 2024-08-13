@@ -6,13 +6,6 @@
     <ValidationSummary />
 
     <div class="form-floating mb-2">
-        <div class="form-check form-switch">
-            <InputCheckbox id="EnableSB2Calculation" @bind-Value="_model.EnableSB2Calculation" class="form-check-input" />
-            <label for="EnableSB2Calculation" class="form-check-label">Enable SB2 calculation</label>
-        </div>
-    </div>
-
-    <div class="form-floating mb-2">
         <InputSelect id="DistrictId" class="form-select form-control" @bind-Value="_model.DistrictId">
             @if (_model.DistrictId is null)
             {
@@ -66,12 +59,18 @@
                     }
                 </div>
             </div>
-            <div class="col-lg">
-                <div class="form-floating">
-                    <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
-                    <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
+            @if (_model.EnableSB2Calculation)
+            {
+                <div class="col-lg">
+                    @if (detail.RequireSB2Data)
+                    {
+                        <div class="form-floating">
+                            <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
+                            <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
+                        </div>
+                    }
                 </div>
-            </div>
+            }
             <div class="col-lg">
                 <div class="form-floating">
                     <InputNumber id="@($"MCR_{detail.Year}")" @bind-Value="detail.MCR" class="form-control" disabled="@detail.MCRPopulated"></InputNumber>
@@ -81,7 +80,7 @@
             @if (_model.EnableSB2Calculation)
             {
                 <div class="col-lg">
-                    @if (detail.RequireTaxRate)
+                    @if (detail.RequireSB2Data)
                     {
                         <div class="form-floating">
                             <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control" disabled="@detail.TaxRatePopulated"></InputNumber>
