@@ -66,7 +66,12 @@ List<SpreadsheetDetail> ProcessTable(DataTable table)
     var year = int.Parse(table.TableName.Substring(2));
     foreach (DataRow row in table.Rows)
     {
-        var districtId = (string)row["DISTRICT_ID"];
+        string districtId;
+        if (year < 2024)
+            districtId = ((string)row["DISTRICT_ID"]);
+        else
+            districtId = ((double)row["DISTRICT_ID"]).ToString().PadLeft(6, '0');
+
         var compressedColumn = year == 2018 ? "COMPRESSED M&O TAX RATE" : "MAXIMUM COMPRESSED M&O TAX RATE";
         var compressedRate = (decimal)Math.Round((double)row[compressedColumn], 4);
         var rawMORate = row["M&O TAX RATE"].ToString();
