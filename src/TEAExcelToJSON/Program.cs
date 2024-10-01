@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Text.Json;
 using ExcelDataReader;
 using TaxTools.Core.TaxLimitation;
@@ -131,6 +131,37 @@ void ReadComptrollerRates(ExcelDataSetConfiguration excelDataSetConfiguration, s
                 var districtId = ((string)row[1]).Replace("-", string.Empty).Substring(0, 6);
                 var rate = (double)row[11];
                 dictionary.Add((districtId, year), (decimal)rate);
+            }
+        }
+    }
+}
+
+void CompareRates()
+{
+    var newRates = JsonSerializer.Deserialize<List<DistrictDetail>>(File.ReadAllText("rates.json"));
+    var oldRates = JsonSerializer.Deserialize<List<DistrictDetail>>(File.ReadAllText("rates_old.json"));
+
+    foreach (var dist in newRates)
+    {
+        var oldDist = oldRates.Single(r => r.DistrictId == dist.DistrictId);
+        foreach (var rate in dist.Rates)
+        {
+            var oldRate = oldDist.Rates.SingleOrDefault(r => r.Year == rate.Year);
+
+            if (oldRate == null)
+            {
+                Console.WriteLine($"{dist.DistrictId} {dist.DistrictName,-40}{rate.Year} no rate found in old rates file");
+                continue;
+            }
+
+            if (rate.MaximumCompressedRate != oldRate.MaximumCompressedRate)
+            {
+                Console.WriteLine($"{dist.DistrictId} {dist.DistrictName,-40}{rate.Year}\tOld MCR {oldRate.MaximumCompressedRate}\tNew MCR {rate.MaximumCompressedRate}");
+            }
+
+            if (rate.ActualMORate != oldRate.ActualMORate)
+            {
+                Console.WriteLine($"{dist.DistrictId} {dist.DistrictName,-40}{rate.Year}\tOld M&O {oldRate.ActualMORate}\tNew M&O {rate.ActualMORate}");
             }
         }
     }
