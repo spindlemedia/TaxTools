@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Text.Json;
 using ExcelDataReader;
 using TaxTools.Core.TaxLimitation;
@@ -68,11 +68,11 @@ List<SpreadsheetDetail> ProcessTable(DataTable table)
     {
         string districtId;
         if (year < 2024)
-            districtId = ((string)row["DISTRICT_ID"]);
+            districtId = ((string)row["DISTRICT ID"]);
         else
-            districtId = ((double)row["DISTRICT_ID"]).ToString().PadLeft(6, '0');
+            districtId = ((double)row["DISTRICT ID"]).ToString().PadLeft(6, '0');
 
-        var compressedColumn = year == 2018 ? "COMPRESSED M&O TAX RATE" : "MAXIMUM COMPRESSED M&O TAX RATE";
+        var compressedColumn = year == 2018 ? "COMPRESSED M&O TAX RATE" : "MAXIMUM COMPRESSED RATE";
         var compressedRate = (decimal)Math.Round((double)row[compressedColumn], 4);
         var rawMORate = row["M&O TAX RATE"].ToString();
         decimal? moRate = null;
@@ -81,7 +81,7 @@ List<SpreadsheetDetail> ProcessTable(DataTable table)
         decimal? totalRate = null;
         if (taxRates.TryGetValue((districtId, year), out var rate))
             totalRate = rate;
-        details.Add(new SpreadsheetDetail(year, districtId, (string)row["DISTNAME"], compressedRate, moRate, totalRate));
+        details.Add(new SpreadsheetDetail(year, districtId, (string)row["DISTRICT NAME"], compressedRate, moRate, totalRate));
     }
     return details;
 }
@@ -131,6 +131,37 @@ void ReadComptrollerRates(ExcelDataSetConfiguration excelDataSetConfiguration, s
                 var districtId = ((string)row[1]).Replace("-", string.Empty).Substring(0, 6);
                 var rate = (double)row[11];
                 dictionary.Add((districtId, year), (decimal)rate);
+            }
+        }
+    }
+}
+
+void CompareRates()
+{
+    var newRates = JsonSerializer.Deserialize<List<DistrictDetail>>(File.ReadAllText("rates.json"));
+    var oldRates = JsonSerializer.Deserialize<List<DistrictDetail>>(File.ReadAllText("rates_old.json"));
+
+    foreach (var dist in newRates)
+    {
+        var oldDist = oldRates.Single(r => r.DistrictId == dist.DistrictId);
+        foreach (var rate in dist.Rates)
+        {
+            var oldRate = oldDist.Rates.SingleOrDefault(r => r.Year == rate.Year);
+
+            if (oldRate == null)
+            {
+                Console.WriteLine($"{dist.DistrictId} {dist.DistrictName,-40}{rate.Year} no rate found in old rates file");
+                continue;
+            }
+
+            if (rate.MaximumCompressedRate != oldRate.MaximumCompressedRate)
+            {
+                Console.WriteLine($"{dist.DistrictId} {dist.DistrictName,-40}{rate.Year}\tOld MCR {oldRate.MaximumCompressedRate}\tNew MCR {rate.MaximumCompressedRate}");
+            }
+
+            if (rate.ActualMORate != oldRate.ActualMORate)
+            {
+                Console.WriteLine($"{dist.DistrictId} {dist.DistrictName,-40}{rate.Year}\tOld M&O {oldRate.ActualMORate}\tNew M&O {rate.ActualMORate}");
             }
         }
     }

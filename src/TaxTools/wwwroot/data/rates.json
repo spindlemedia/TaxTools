@@ -515,7 +515,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6451,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 1.0375
       },
@@ -749,7 +749,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8046,
+        "MaximumCompressedRate": 0.8313,
         "ActualMORate": 0.8813,
         "TotalTaxRate": 1.1813
       },
@@ -1235,7 +1235,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6309,
+        "MaximumCompressedRate": 0.6311,
         "ActualMORate": null,
         "TotalTaxRate": 1.0423
       },
@@ -1260,7 +1260,7 @@
       {
         "Year": 2019,
         "MaximumCompressedRate": 0.93,
-        "ActualMORate": 0.97,
+        "ActualMORate": 0.6692,
         "TotalTaxRate": 1.34
       },
       {
@@ -1614,7 +1614,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.9746,
+        "ActualMORate": 0.8546,
         "TotalTaxRate": 0.9060
       },
       {
@@ -1698,7 +1698,7 @@
       {
         "Year": 2020,
         "MaximumCompressedRate": 0.9164,
-        "ActualMORate": 1.0547,
+        "ActualMORate": 0.6692,
         "TotalTaxRate": 1.1917
       },
       {
@@ -3005,7 +3005,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8233,
+        "MaximumCompressedRate": 0.8046,
         "ActualMORate": 0.8846,
         "TotalTaxRate": 1.1200
       },
@@ -4632,7 +4632,7 @@
       {
         "Year": 2021,
         "MaximumCompressedRate": 0.8407,
-        "ActualMORate": 0.9038,
+        "ActualMORate": 0.979,
         "TotalTaxRate": 0.979
       },
       {
@@ -6224,6 +6224,12 @@
         "MaximumCompressedRate": 0.8046,
         "ActualMORate": 0.0492,
         "TotalTaxRate": 0.0492
+      },
+      {
+        "Year": 2023,
+        "MaximumCompressedRate": 0.7897,
+        "ActualMORate": null,
+        "TotalTaxRate": null
       }
     ]
   },
@@ -7175,7 +7181,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6822,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 0.7817
       },
@@ -7799,7 +7805,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6693,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 0.7411
       },
@@ -8951,7 +8957,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6698,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 0.8313
       },
@@ -9143,7 +9149,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.688,
+        "MaximumCompressedRate": 0.6213,
         "ActualMORate": null,
         "TotalTaxRate": 0.8736
       },
@@ -9863,7 +9869,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6715,
+        "MaximumCompressedRate": 0.6697,
         "ActualMORate": null,
         "TotalTaxRate": 1.184
       },
@@ -10242,7 +10248,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.9746,
+        "ActualMORate": 0.8546,
         "TotalTaxRate": 1.1906
       },
       {
@@ -12306,7 +12312,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8941,
-        "ActualMORate": 0.9634,
+        "ActualMORate": 0.9441,
         "TotalTaxRate": 0.9441
       },
       {
@@ -12647,7 +12653,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.688,
+        "MaximumCompressedRate": 0.6718,
         "ActualMORate": null,
         "TotalTaxRate": 0.7245
       },
@@ -12785,7 +12791,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8126,
+        "MaximumCompressedRate": 0.8103,
         "ActualMORate": 0.8603,
         "TotalTaxRate": 0.9104
       },
@@ -15013,7 +15019,7 @@
   },
   {
     "DistrictId": "077901",
-    "DistrictName": "FLOYDADA COLLEGIATE ISD",
+    "DistrictName": "FLOYDADA ISD",
     "Rates": [
       {
         "Year": 2018,
@@ -18785,7 +18791,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8235,
+        "MaximumCompressedRate": 0.8355,
         "ActualMORate": 0.9738,
         "TotalTaxRate": 1.1635
       },
@@ -20855,7 +20861,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6549,
+        "MaximumCompressedRate": 0.6517,
         "ActualMORate": null,
         "TotalTaxRate": 1.0917
       },
@@ -21863,7 +21869,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.662,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 1.1892
       },
@@ -22981,7 +22987,7 @@
   },
   {
     "DistrictId": "112905",
-    "DistrictName": "CUMBY COLLEGIATE ISD",
+    "DistrictName": "CUMBY ISD",
     "Rates": [
       {
         "Year": 2018,
@@ -23490,7 +23496,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.872,
+        "ActualMORate": 0.8546,
         "TotalTaxRate": 0.8546
       },
       {
@@ -23538,7 +23544,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.8846,
+        "ActualMORate": 0.8546,
         "TotalTaxRate": 0.9309
       },
       {
@@ -23586,7 +23592,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.8846,
+        "ActualMORate": 0.8546,
         "TotalTaxRate": 1.1346
       },
       {
@@ -23634,7 +23640,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.8846,
+        "ActualMORate": 0.8546,
         "TotalTaxRate": 1.1346
       },
       {
@@ -24497,7 +24503,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.688,
+        "MaximumCompressedRate": 0.6201,
         "ActualMORate": null,
         "TotalTaxRate": 0.8001
       },
@@ -24540,7 +24546,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8941,
-        "ActualMORate": 0.9441,
+        "ActualMORate": 0.6692,
         "TotalTaxRate": 1.3841
       },
       {
@@ -25217,7 +25223,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6601,
+        "MaximumCompressedRate": 0.688,
         "ActualMORate": null,
         "TotalTaxRate": 1.3263
       },
@@ -26191,7 +26197,7 @@
   },
   {
     "DistrictId": "127903",
-    "DistrictName": "HAMLIN COLLEGIATE ISD",
+    "DistrictName": "HAMLIN ISD",
     "Rates": [
       {
         "Year": 2018,
@@ -29261,7 +29267,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6705,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 0.874474
       },
@@ -30473,7 +30479,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8815,
+        "MaximumCompressedRate": 0.8046,
         "ActualMORate": 0.9717,
         "TotalTaxRate": 1.0780
       },
@@ -31770,7 +31776,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.9746,
+        "ActualMORate": 0.8546,
         "TotalTaxRate": 1.1740
       },
       {
@@ -32063,7 +32069,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6561,
+        "MaximumCompressedRate": 0.6553,
         "ActualMORate": null,
         "TotalTaxRate": 0.9131
       },
@@ -33023,7 +33029,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.653,
+        "MaximumCompressedRate": 0.6389,
         "ActualMORate": null,
         "TotalTaxRate": 0.6888
       },
@@ -33709,7 +33715,7 @@
   },
   {
     "DistrictId": "171902",
-    "DistrictName": "SUNRAY COLLEGIATE ISD",
+    "DistrictName": "SUNRAY ISD",
     "Rates": [
       {
         "Year": 2018,
@@ -33977,7 +33983,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8329,
+        "MaximumCompressedRate": 0.837,
         "ActualMORate": 0.887,
         "TotalTaxRate": 1.147
       },
@@ -34295,7 +34301,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8188,
+        "MaximumCompressedRate": 0.8207,
         "ActualMORate": 0.8707,
         "TotalTaxRate": 1.1789
       },
@@ -35496,7 +35502,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.9246,
+        "ActualMORate": 0.8846,
         "TotalTaxRate": 0.9586
       },
       {
@@ -36941,7 +36947,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.688,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 1.0032
       },
@@ -37099,7 +37105,7 @@
   },
   {
     "DistrictId": "186903",
-    "DistrictName": "IRAAN-SHEFFIELD COLLEGIATE ISD",
+    "DistrictName": "IRAAN-SHEFFIELD ISD",
     "Rates": [
       {
         "Year": 2018,
@@ -37853,7 +37859,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6447,
+        "MaximumCompressedRate": 0.6232,
         "ActualMORate": null,
         "TotalTaxRate": 0.8885
       },
@@ -38045,7 +38051,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6192,
+        "MaximumCompressedRate": 0.6684,
         "ActualMORate": null,
         "TotalTaxRate": 1.0867
       },
@@ -38957,7 +38963,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6368,
+        "MaximumCompressedRate": 0.6493,
         "ActualMORate": null,
         "TotalTaxRate": 0.9293
       },
@@ -40061,7 +40067,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.688,
+        "MaximumCompressedRate": 0.6545,
         "ActualMORate": null,
         "TotalTaxRate": 0.7928
       },
@@ -40295,7 +40301,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8865,
+        "MaximumCompressedRate": 0.8941,
         "ActualMORate": 0.9441,
         "TotalTaxRate": 0.9441
       },
@@ -41016,7 +41022,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 0.8846,
+        "ActualMORate": 0.8646,
         "TotalTaxRate": 1.1526
       },
       {
@@ -41179,7 +41185,7 @@
   },
   {
     "DistrictId": "214901",
-    "DistrictName": "RIO GRANDE CITY GRULLA ISD",
+    "DistrictName": "RIO GRANDE CITY CISD",
     "Rates": [
       {
         "Year": 2018,
@@ -42695,7 +42701,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.8941,
+        "MaximumCompressedRate": 0.8046,
         "ActualMORate": 0.8546,
         "TotalTaxRate": 1.2467
       },
@@ -42859,7 +42865,7 @@
   },
   {
     "DistrictId": "224901",
-    "DistrictName": "THROCKMORTON COLLEGIATE ISD",
+    "DistrictName": "THROCKMORTON ISD",
     "Rates": [
       {
         "Year": 2018,
@@ -43517,7 +43523,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6521,
+        "MaximumCompressedRate": 0.6416,
         "ActualMORate": null,
         "TotalTaxRate": 1.0861
       },
@@ -46205,7 +46211,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.688,
+        "MaximumCompressedRate": 0.6852,
         "ActualMORate": null,
         "TotalTaxRate": 0.7352
       },
@@ -46728,7 +46734,7 @@
       {
         "Year": 2022,
         "MaximumCompressedRate": 0.8046,
-        "ActualMORate": 1.0449,
+        "ActualMORate": 0.9249,
         "TotalTaxRate": 1.1649
       },
       {
@@ -47357,7 +47363,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.688,
+        "MaximumCompressedRate": 0.6194,
         "ActualMORate": null,
         "TotalTaxRate": 1.2077
       },
@@ -47543,7 +47549,7 @@
       },
       {
         "Year": 2022,
-        "MaximumCompressedRate": 0.822,
+        "MaximumCompressedRate": 0.8046,
         "ActualMORate": 0.8546,
         "TotalTaxRate": 1.2496
       },
@@ -47933,7 +47939,7 @@
       },
       {
         "Year": 2023,
-        "MaximumCompressedRate": 0.6405,
+        "MaximumCompressedRate": 0.6192,
         "ActualMORate": null,
         "TotalTaxRate": 0.789746
       },
