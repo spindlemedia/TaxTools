@@ -68,11 +68,11 @@ List<SpreadsheetDetail> ProcessTable(DataTable table)
     {
         string districtId;
         if (year < 2024)
-            districtId = ((string)row["DISTRICT_ID"]);
+            districtId = ((string)row["DISTRICT ID"]);
         else
-            districtId = ((double)row["DISTRICT_ID"]).ToString().PadLeft(6, '0');
+            districtId = ((double)row["DISTRICT ID"]).ToString().PadLeft(6, '0');
 
-        var compressedColumn = year == 2018 ? "COMPRESSED M&O TAX RATE" : "MAXIMUM COMPRESSED M&O TAX RATE";
+        var compressedColumn = year == 2018 ? "COMPRESSED M&O TAX RATE" : "MAXIMUM COMPRESSED RATE";
         var compressedRate = (decimal)Math.Round((double)row[compressedColumn], 4);
         var rawMORate = row["M&O TAX RATE"].ToString();
         decimal? moRate = null;
@@ -81,7 +81,7 @@ List<SpreadsheetDetail> ProcessTable(DataTable table)
         decimal? totalRate = null;
         if (taxRates.TryGetValue((districtId, year), out var rate))
             totalRate = rate;
-        details.Add(new SpreadsheetDetail(year, districtId, (string)row["DISTNAME"], compressedRate, moRate, totalRate));
+        details.Add(new SpreadsheetDetail(year, districtId, (string)row["DISTRICT NAME"], compressedRate, moRate, totalRate));
     }
     return details;
 }
