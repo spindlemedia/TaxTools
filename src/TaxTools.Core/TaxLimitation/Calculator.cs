@@ -65,31 +65,79 @@ namespace TaxTools.Core.TaxLimitation
             }
             else
             {
-                if (!parameters.EnableSB2Calculation || parameters.CalculationYear != 2023)
-                    return result;
-
-                var sb = new StringBuilder();
-                if (parameters.ExemptionQualifyYear < 2022)
+                switch (parameters.CalculationYear)
                 {
-                    var prevYear = parameters.YearDetails[year - 1];
-                    var exemptAmount = 15000 * (prevYear.OwnershipPercent / 100);
-                    result.SB2Reduction = Math.Round(exemptAmount * prevYear.TaxRate / 100, 2);
-                    sb.Append($"({exemptAmount:N0} x {prevYear.TaxRate} / 100) + ");
+                    case 2023:
+                        Handle2023Calculation(parameters, year, result, curYear);
+                        break;
+                    case 2025:
+                        Handle2025Calculation(parameters, result, curYear);
+                        break;
                 }
-                if (parameters.ExemptionQualifyYear < 2023)
-                {
-                    var exemptAmount = 60000 * (curYear.OwnershipPercent / 100);
-                    var sb2Amount = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
-                    if (result.SB2Reduction == null)
-                        result.SB2Reduction = sb2Amount;
-                    else
-                        result.SB2Reduction += sb2Amount;
-                    sb.Append($"({exemptAmount:N0} x {curYear.TaxRate} / 100)");
-                }
-                result.SB2CalculationText = sb.ToString();
             }
 
             return result;
+        }
+
+        private static void Handle2023Calculation(CalculationParameters parameters, int year, CalculationResultDetail result,
+            CalculationParameterYearDetail curYear)
+        {
+            var sb = new StringBuilder();
+            if (parameters.ExemptionQualifyYear < 2022)
+            {
+                var prevYear = parameters.YearDetails[year - 1];
+                var exemptAmount = 15000 * (prevYear.OwnershipPercent / 100);
+                result.SB2Reduction = Math.Round(exemptAmount * prevYear.TaxRate / 100, 2);
+                sb.Append($"({exemptAmount:N0} x {prevYear.TaxRate} / 100) + ");
+            }
+
+            if (parameters.ExemptionQualifyYear < 2023)
+            {
+                var exemptAmount = 60000 * (curYear.OwnershipPercent / 100);
+                var sb2Amount = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                if (result.SB2Reduction == null)
+                    result.SB2Reduction = sb2Amount;
+                else
+                    result.SB2Reduction += sb2Amount;
+                sb.Append($"({exemptAmount:N0} x {curYear.TaxRate} / 100)");
+            }
+
+            result.SB2CalculationText = sb.ToString();
+        }
+
+        private static void Handle2025Calculation(CalculationParameters parameters, CalculationResultDetail result,
+            CalculationParameterYearDetail curYear)
+        {
+            if (parameters.ExemptionQualifyYear > 2024)
+                return;
+
+            if (parameters.EnableSB4Calculation)
+            {
+                var sb = new StringBuilder();
+                var exemptAmount = 40000 * (curYear.OwnershipPercent / 100);
+                var amount = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                if (result.SB4Reduction == null)
+                    result.SB4Reduction = amount;
+                else
+                    result.SB4Reduction += amount;
+                sb.Append($"({exemptAmount:N0} x {curYear.TaxRate} / 100)");
+
+                result.SB4CalculationText = sb.ToString();
+            }
+
+            if (parameters.EnableSB23Calculation)
+            {
+                var sb = new StringBuilder();
+                var exemptAmount = 50000 * (curYear.OwnershipPercent / 100);
+                var amount = Math.Round(exemptAmount * curYear.TaxRate / 100, 2);
+                if (result.SB23Reduction == null)
+                    result.SB23Reduction = amount;
+                else
+                    result.SB23Reduction += amount;
+                sb.Append($"({exemptAmount:N0} x {curYear.TaxRate} / 100)");
+
+                result.SB23CalculationText = sb.ToString();
+            }
         }
     }
 }
