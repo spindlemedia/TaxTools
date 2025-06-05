@@ -133,14 +133,22 @@
             @for (var i = 0; i < _calculationResult.Details.Count; i++)
             {
                 var detail = _calculationResult.Details[i];
-                var firstOrFinal = i == 0 || i == _calculationResult.Details.Count - 1;
+                var firstDetail = i == 0;
+                var lastDetail = i == _calculationResult.Details.Count - 1;
 
                 <tr>
                     <th scope="row">@detail.Year</th>
                     <td>@detail.StartingAmount.ToString("C2")</td>
-                    <td>@(firstOrFinal ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
-                    <td>@(firstOrFinal ? "N/A" : detail.TaxableValue.ToString("N0"))</td>
-                    <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
+                    <td>@(firstDetail ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
+                    <td>@(lastDetail ? "N/A" : detail.TaxableValue.ToString("N0"))</td>
+                    @if (lastDetail)
+                    {
+                        <td>N/A</td>
+                    }
+                    else
+                    {
+                        <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
+                    }
                     @if (_model.TaxYear == 2023)
                     {
                         if (detail.SB2Reduction.HasValue)
