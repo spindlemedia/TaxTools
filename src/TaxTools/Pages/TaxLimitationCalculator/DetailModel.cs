@@ -23,8 +23,9 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         public bool MCRPopulated { get; set; }
         public bool TaxRatePopulated { get; set; }
 
-        public bool RequireSB2Data => _parent.EnableSB2Calculation &&
-                                      (( _parent.ExemptionQualifyYear <= 2022 && Year == 2023) || (_parent.ExemptionQualifyYear <= 2021 && Year == 2022));
+        public bool RequireAdditionalData => (_parent.ExemptionQualifyYear <= 2022 && Year == 2023)
+                                               || (_parent.ExemptionQualifyYear <= 2021 && Year == 2022)
+                                               || (_parent.ExemptionQualifyYear <= 2024 && Year == 2025 && (_parent.EnableSB4Calculation || _parent.EnableSB23Calculation));
 
         public DetailModel(CalculatorModel parent, int year)
         {
@@ -45,7 +46,8 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         [Range(1900, 2050, ErrorMessage = "Exemption Qualify Year must be greater than 1900")]
         public int ExemptionQualifyYear { get; set; }
 
-        public bool EnableSB2Calculation { get; set; }
+        public bool EnableSB4Calculation { get; set; }
+        public bool EnableSB23Calculation { get; set; }
 
         [ValidateComplexType]
         public List<DetailModel> Details { get; set; }
@@ -53,8 +55,9 @@ namespace TaxTools.Pages.TaxLimitationCalculator
         public CalculatorModel()
         {
             Details = new List<DetailModel>();
-            EnableSB2Calculation = true;
-            TaxYear = 2023;
+            EnableSB4Calculation = true;
+            EnableSB23Calculation = true;
+            TaxYear = 2024;
         }
     }
 }

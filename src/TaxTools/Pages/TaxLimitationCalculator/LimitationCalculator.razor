@@ -5,6 +5,23 @@
     <ObjectGraphDataAnnotationsValidator />
     <ValidationSummary />
 
+    @if (_model.TaxYear == 2025)
+    {
+        <div class="form-floating mb-2">
+            <div class="form-check form-switch">
+                <InputCheckbox id="EnableSB4Calculation" @bind-Value="_model.EnableSB4Calculation" class="form-check-input" />
+                <label for="EnableSB4Calculation" class="form-check-label">Enable SB4 (140k HS) calculation</label>
+            </div>
+        </div>
+
+        <div class="form-floating mb-2">
+            <div class="form-check form-switch">
+                <InputCheckbox id="EnableSB23Calculation" @bind-Value="_model.EnableSB23Calculation" class="form-check-input" />
+                <label for="EnableSB23Calculation" class="form-check-label">Enable SB23 (60k O65/DP) calculation</label>
+            </div>
+        </div>
+    }
+
     <div class="form-floating mb-2">
         <InputSelect id="DistrictId" class="form-select form-control" @bind-Value="_model.DistrictId">
             @if (_model.DistrictId is null)
@@ -59,36 +76,30 @@
                     }
                 </div>
             </div>
-            @if (_model.EnableSB2Calculation)
-            {
-                <div class="col-lg">
-                    @if (detail.RequireSB2Data)
-                    {
-                        <div class="form-floating">
-                            <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
-                            <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
-                        </div>
-                    }
-                </div>
-            }
+            <div class="col-lg">
+                @if (detail.RequireAdditionalData)
+                {
+                    <div class="form-floating">
+                        <InputNumber id="@($"Ownership_{detail.Year}")" @bind-Value="detail.OwnershipPercent" class="form-control"></InputNumber>
+                        <label for="@($"Ownership__{detail.Year}")" class="form-label">@detail.Year Ownership %</label>
+                    </div>
+                }
+            </div>
             <div class="col-lg">
                 <div class="form-floating">
                     <InputNumber id="@($"MCR_{detail.Year}")" @bind-Value="detail.MCR" class="form-control" disabled="@detail.MCRPopulated"></InputNumber>
                     <label for="@($"MCR_{detail.Year}")" class="form-label">@detail.Year MCR</label>
                 </div>
             </div>
-            @if (_model.EnableSB2Calculation)
-            {
-                <div class="col-lg">
-                    @if (detail.RequireSB2Data)
-                    {
-                        <div class="form-floating">
-                            <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control" disabled="@detail.TaxRatePopulated"></InputNumber>
-                            <label for="@($"TaxRate_{detail.Year}")" class="form-label">@detail.Year Total Tax Rate</label>
-                        </div>
-                    }
-                </div>
-            }
+            <div class="col-lg">
+                @if (detail.RequireAdditionalData)
+                {
+                    <div class="form-floating">
+                        <InputNumber id="@($"TaxRate_{detail.Year}")" @bind-Value="detail.TaxRate" class="form-control" disabled="@detail.TaxRatePopulated"></InputNumber>
+                        <label for="@($"TaxRate_{detail.Year}")" class="form-label">@detail.Year Total Tax Rate</label>
+                    </div>
+                }
+            </div>
         </div>
     }
 
@@ -106,9 +117,14 @@
                 <th scope="col">Ceiling Adjustments</th>
                 <th scope="col">Taxable Value</th>
                 <th scope="col">SB 12 Reduction</th>
-                @if (_model.EnableSB2Calculation)
+                @if (_model.TaxYear == 2023)
                 {
                     <th scope="col">SB 2 Reduction</th>
+                }
+                else if (_model.TaxYear == 2025)
+                {
+                    <th scope="col">SB 4 Reduction</th>
+                    <th scope="col">SB 23 Reduction</th>
                 }
                 <th scope="col">Running Total</th>
             </tr>
@@ -117,50 +133,46 @@
             @for (var i = 0; i < _calculationResult.Details.Count; i++)
             {
                 var detail = _calculationResult.Details[i];
-                if (i < _calculationResult.Details.Count - 1)
-                {
-                    <tr>
-                        <th scope="row">@detail.Year</th>
-                        <td>@detail.StartingAmount.ToString("C2")</td>
-                        <td>@(i == 0 ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
-                        <td>@(detail.TaxableValue.ToString("N0"))</td>
-                        <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
-                        @if (_model.EnableSB2Calculation)
+                var firstOrFinal = i == 0 || i == _calculationResult.Details.Count - 1;
+
+                <tr>
+                    <th scope="row">@detail.Year</th>
+                    <td>@detail.StartingAmount.ToString("C2")</td>
+                    <td>@(firstOrFinal ? "N/A" : detail.AdditionalImprovement.ToString("C2"))</td>
+                    <td>@(firstOrFinal ? "N/A" : detail.TaxableValue.ToString("N0"))</td>
+                    <td><Tooltip Text="@detail.SB12CalculationText">@detail.SB12Reduction.ToString("C2")</Tooltip></td>
+                    @if (_model.TaxYear == 2023)
+                    {
+                        if (detail.SB2Reduction.HasValue)
                         {
-                            if (detail.SB2Reduction.HasValue)
-                            {
-                                <td><Tooltip Text="@detail.SB2CalculationText">@detail.SB2Reduction.Value.ToString("C2")</Tooltip></td>
-                            }
-                            else
-                            {
-                                <td>N/A</td>
-                            }
+                            <td><Tooltip Text="@detail.SB2CalculationText">@detail.SB2Reduction.Value.ToString("C2")</Tooltip></td>
                         }
-                        <td>@detail.RunningTotal.ToString("C2")</td>
-                    </tr>
-                }
-                else
-                {
-                    <tr>
-                        <th scope="row">@detail.Year</th>
-                        <td>@detail.StartingAmount.ToString("C2")</td>
-                        <td>@detail.AdditionalImprovement.ToString("C2")</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        @if (_model.EnableSB2Calculation)
+                        else
                         {
-                            if (detail.SB2Reduction.HasValue)
-                            {
-                                <td><Tooltip Text="@detail.SB2CalculationText">@detail.SB2Reduction.Value.ToString("C2")</Tooltip></td>
-                            }
-                            else
-                            {
-                                <td>N/A</td>
-                            }
+                            <td>N/A</td>
                         }
-                        <td><b>@detail.RunningTotal.ToString("C2")</b></td>
-                    </tr>
-                }
+                    }
+                    else if (_model.TaxYear == 2025)
+                    {
+                        if (detail.SB4Reduction.HasValue)
+                        {
+                            <td><Tooltip Text="@detail.SB4CalculationText">@detail.SB4Reduction.Value.ToString("C2")</Tooltip></td>
+                        }
+                        else
+                        {
+                            <td>N/A</td>
+                        }
+                        if (detail.SB23Reduction.HasValue)
+                        {
+                            <td><Tooltip Text="@detail.SB23CalculationText">@detail.SB23Reduction.Value.ToString("C2")</Tooltip></td>
+                        }
+                        else
+                        {
+                            <td>N/A</td>
+                        }
+                    }
+                    <td>@detail.RunningTotal.ToString("C2")</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -252,7 +264,8 @@
             {
                 ExemptionQualifyYear = _model.ExemptionQualifyYear,
                 CalculationYear = _model.TaxYear,
-                EnableSB2Calculation = _model.EnableSB2Calculation
+                EnableSB4Calculation = _model.EnableSB4Calculation,
+                EnableSB23Calculation = _model.EnableSB23Calculation
             };
 
         foreach (var detail in _model.Details)
