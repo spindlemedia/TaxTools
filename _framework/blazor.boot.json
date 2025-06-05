@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "TaxTools",
   "resources": {
-    "hash": "sha256-/vRigB8sV4JoL0Lk0309NEXFbeVnAyR3DzP3kZSHE2w=",
+    "hash": "sha256-hcd6Y0K+J0+zOFmt4w3YzRzEC+4ELut1xU6up5W1Xks=",
     "jsModuleNative": {
       "dotnet.native.8.0.16.khcj4p6y0x.js": "sha256-RiGT44TFZmHOY+Oqvb8o8r+BJVWex6+dPxFxrOiWvFY="
     },
@@ -78,8 +78,8 @@
       "System.Web.HttpUtility.wasm": "sha256-7iVbLTKk1BPS7ymMhcbO+ioasxiBW0Sy66C0b1NSTJs=",
       "System.Xml.Linq.wasm": "sha256-7UueEqWDs9n7A82PrPpoti3oawArKpTNAAbZqZNj1Qs=",
       "System.Xml.XDocument.wasm": "sha256-eosPdjpieX7i7NJzabetY5Grcl62ghnSnrohhYAS+Hg=",
-      "TaxTools.Core.wasm": "sha256-DE8FHvvL+AKTeNLezBET3hlghaxttvWBYorsLeIwNqY=",
-      "TaxTools.wasm": "sha256-z6xM7bZep9/8f+0i9PUKYf8+8fjjhHhIRLK+ovp/ylE="
+      "TaxTools.Core.wasm": "sha256-7oXDvNGa/IlqUK5LL5MJsrUBxFwFPOfm6MMOrpcmods=",
+      "TaxTools.wasm": "sha256-P0HmQfDa8tx1e45HVR5sHjxPSRH4lFGm0Mk6ff3KEMc="
     }
   },
   "cacheBootResources": true,
