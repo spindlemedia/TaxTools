@@ -57,7 +57,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
             Details = new List<DetailModel>();
             EnableSB4Calculation = true;
             EnableSB23Calculation = true;
-            TaxYear = 2024;
+            TaxYear = 2025;
         }
     }
 }
