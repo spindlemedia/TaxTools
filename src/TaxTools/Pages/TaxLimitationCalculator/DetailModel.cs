@@ -25,7 +25,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
 
         public bool RequireAdditionalData => (_parent.ExemptionQualifyYear <= 2022 && Year == 2023)
                                                || (_parent.ExemptionQualifyYear <= 2021 && Year == 2022)
-                                               || (_parent.ExemptionQualifyYear <= 2024 && Year == 2025 && (_parent.EnableSB4Calculation || _parent.EnableSB23Calculation));
+                                               || (_parent.ExemptionQualifyYear <= 2024 && Year == 2025 && _parent.TaxYear == 2025 && (_parent.EnableSB4Calculation || _parent.EnableSB23Calculation));
 
         public DetailModel(CalculatorModel parent, int year)
         {
@@ -57,7 +57,7 @@ namespace TaxTools.Pages.TaxLimitationCalculator
             Details = new List<DetailModel>();
             EnableSB4Calculation = true;
             EnableSB23Calculation = true;
-            TaxYear = 2025;
+            TaxYear = 2026;
         }
     }
 }
